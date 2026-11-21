@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FIT — Spatial Fashion & Footwear Showcase</title>
+  <title>FIT STORE — E-Commerce & 3D Try-On</title>
   <style>
     * {
       margin: 0;
@@ -13,1070 +13,1066 @@
     }
 
     body {
-      background: #d8dce3;
-      color: #1a1d24;
+      background: #f1f5f9;
+      color: #0f172a;
       min-height: 100vh;
-      overflow-x: hidden;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      perspective: 1200px;
-      user-select: none;
     }
 
-    /* Studio Room Background */
-    .studio-room {
-      position: fixed;
-      inset: -40px;
-      background: radial-gradient(circle at 50% 42%, #f4f6fa 0%, #cfd5df 55%, #aeb6c4 100%);
-      z-index: -2;
-      transition: transform 0.15s ease-out;
-    }
-
-    .studio-floor {
-      position: fixed;
-      bottom: -30px;
-      left: -10%;
-      width: 120%;
-      height: 36vh;
-      background: linear-gradient(to bottom, rgba(185, 193, 206, 0.4), rgba(145, 154, 168, 0.85));
-      border-top: 1px solid rgba(255, 255, 255, 0.5);
-      z-index: -1;
-    }
-
-    /* Giant Background Typography */
-    .bg-title {
-      position: fixed;
-      top: 44%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: clamp(140px, 24vw, 320px);
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      color: rgba(255, 255, 255, 0.55);
-      pointer-events: none;
-      z-index: 0;
-      transition: transform 0.2s ease-out;
-    }
-
-    /* Top Navigation Pill */
-    header {
+    /* Amazon/Daraz Style Top Navbar */
+    .navbar {
+      background: #131921;
+      color: #fff;
+      padding: 12px 24px;
       display: flex;
-      justify-content: center;
-      padding-top: 22px;
-      z-index: 10;
-    }
-
-    .nav-pill {
-      display: flex;
-      gap: 6px;
+      align-items: center;
+      gap: 16px;
       flex-wrap: wrap;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.68);
-      backdrop-filter: blur(14px);
-      padding: 6px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.75);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
-    .nav-btn {
+    .brand {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .brand span {
+      color: #f59e0b;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 220px;
+      display: flex;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .search-box select {
       border: none;
-      background: transparent;
-      padding: 7px 15px;
-      border-radius: 999px;
+      background: #e2e8f0;
+      padding: 0 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+      outline: none;
+    }
+
+    .search-box input {
+      flex: 1;
+      border: none;
+      padding: 10px 14px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search-btn {
+      border: none;
+      background: #f59e0b;
+      color: #111827;
+      padding: 0 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-pill-btn {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 8px;
       font-size: 13px;
       font-weight: 600;
-      color: #4a5160;
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: all 0.2s;
     }
 
-    .nav-btn.active {
-      background: #1a1d24;
+    .nav-pill-btn.active, .nav-pill-btn:hover {
+      background: #f59e0b;
+      color: #111827;
+      border-color: #f59e0b;
+    }
+
+    /* Sub-bar Categories */
+    .sub-bar {
+      background: #232f3e;
+      color: #e2e8f0;
+      padding: 8px 24px;
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      font-size: 13px;
+    }
+
+    .cat-chip {
+      cursor: pointer;
+      padding: 4px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .cat-chip:hover, .cat-chip.active {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Main Content Container */
+    .container {
+      width: 100%;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 20px;
+      flex: 1;
+    }
+
+    .view-section {
+      display: none;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    /* Featured Loop / Lookbook Banner Strip (Customizable Pics!) */
+    .loop-strip {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
       color: #fff;
     }
 
-    /* Main Spatial Stage */
-    .stage {
-      position: relative;
-      flex: 1;
-      min-height: 520px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transform-style: preserve-3d;
-      z-index: 2;
-      padding: 20px;
-    }
-
-    .tab-panel {
-      display: none;
-      width: 100%;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .tab-panel.active {
-      display: flex;
-    }
-
-    /* Floating Sneaker Cards */
-    .cards-row {
-      position: relative;
-      width: 94%;
-      max-width: 1280px;
+    .loop-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      pointer-events: none;
-    }
-
-    .card-group {
-      display: flex;
-      gap: 16px;
-      align-items: center;
+      margin-bottom: 14px;
       flex-wrap: wrap;
-      max-width: 390px;
-      pointer-events: auto;
+      gap: 10px;
     }
 
-    .shoe-card {
-      width: 165px;
-      height: 215px;
-      background: rgba(255, 255, 255, 0.48);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.75);
-      border-radius: 20px;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      box-shadow: 0 18px 35px rgba(25, 32, 48, 0.08);
-      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.3s ease;
-    }
-
-    .shoe-card:hover {
-      transform: translateY(-8px) scale(1.04);
-      box-shadow: 0 24px 45px rgba(25, 32, 48, 0.14);
-      border-color: #ffffff;
-    }
-
-    .shoe-card.active {
-      border: 2px solid #5b2be0;
-      background: rgba(255, 255, 255, 0.82);
-      transform: translateY(-6px) scale(1.05);
-    }
-
-    .shoe-card-img {
-      width: 115px;
-      height: 85px;
-      object-fit: cover;
-      border-radius: 12px;
-    }
-
-    .shoe-info {
-      text-align: center;
-    }
-
-    .shoe-name {
-      font-size: 13px;
-      font-weight: 700;
-      color: #1a1d24;
-    }
-
-    .shoe-price {
-      font-size: 11px;
-      color: #5b6375;
-      margin-top: 3px;
-    }
-
-    /* Center Interactive Model */
-    .model-container {
-      position: relative;
-      width: 260px;
-      height: 460px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      z-index: 5;
-      transition: transform 0.2s ease-out;
-    }
-
-    .model-shadow {
-      position: absolute;
-      bottom: 8px;
-      width: 150px;
-      height: 22px;
-      background: radial-gradient(ellipse at center, rgba(20, 25, 35, 0.35) 0%, transparent 72%);
-      border-radius: 50%;
-    }
-
-    .mannequin-svg {
-      width: 220px;
-      height: 440px;
-      filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.12));
-    }
-
-    /* Glass Panels (Studio, Lookbook, Admin) */
-    .glass-box {
-      width: 100%;
-      max-width: 960px;
-      background: rgba(255, 255, 255, 0.72);
-      backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.88);
-      border-radius: 24px;
-      padding: 28px;
-      box-shadow: 0 20px 45px rgba(20, 25, 38, 0.1);
-      max-height: 74vh;
-      overflow-y: auto;
-    }
-
-    .glass-box h2 {
-      font-size: 20px;
-      margin-bottom: 6px;
-    }
-
-    .glass-box p {
-      font-size: 13px;
-      color: #4a5160;
-      margin-bottom: 18px;
-    }
-
-    .grid-cards {
+    .loop-track {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
+      gap: 14px;
     }
 
-    .item-card {
-      background: rgba(255, 255, 255, 0.82);
-      border-radius: 18px;
+    .loop-card {
+      position: relative;
+      height: 150px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #334155;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      transition: transform 0.25s ease;
+    }
+
+    .loop-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .loop-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .loop-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.78), transparent 55%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 12px;
+    }
+
+    /* Amazon/Daraz Style Product Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 18px;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 14px;
       padding: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.95);
+      border: 1px solid #e2e8f0;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 12px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .product-thumb {
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    .product-media {
       width: 100%;
-      height: 140px;
+      height: 175px;
+      background: #f8fafc;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .product-media img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 10px;
-      background: #e2e8f0;
     }
 
-    .badge {
-      display: inline-block;
-      font-size: 11px;
+    .cat-tag {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(15, 23, 42, 0.75);
+      color: #fff;
+      font-size: 10px;
       font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(91, 43, 224, 0.12);
-      color: #5b2be0;
-      margin-bottom: 6px;
+      padding: 3px 8px;
+      border-radius: 6px;
     }
 
-    /* Admin Form Controls */
-    .admin-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-      margin-bottom: 24px;
+    .prod-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 4px;
     }
 
-    .form-card {
-      background: rgba(255, 255, 255, 0.85);
-      padding: 18px;
-      border-radius: 18px;
-      border: 1px solid rgba(0, 0, 0, 0.06);
+    .prod-rating {
+      font-size: 12px;
+      color: #f59e0b;
+      font-weight: 700;
+      margin-bottom: 8px;
     }
 
-    .form-card h3 {
-      font-size: 15px;
+    .prod-price {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f172a;
       margin-bottom: 12px;
     }
 
-    .field {
+    .card-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      border: none;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .btn:hover { opacity: 0.9; }
+    .btn-amber { background: #f59e0b; color: #111827; flex: 1; }
+    .btn-dark { background: #1e293b; color: #fff; }
+    .btn-light { background: #e2e8f0; color: #0f172a; }
+    .btn-danger { background: #ef4444; color: #fff; }
+
+    /* 3D Try-On Studio Layout */
+    .studio-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 20px;
+      min-height: 560px;
+    }
+
+    .stage-3d {
+      background: radial-gradient(circle at 50% 42%, #ffffff 0%, #cbd5e1 65%, #94a3b8 100%);
+      border-radius: 20px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px solid #cbd5e1;
+      min-height: 500px;
+    }
+
+    .stage-bg-word {
+      position: absolute;
+      font-size: clamp(90px, 16vw, 200px);
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.55);
+      pointer-events: none;
+    }
+
+    .model-box {
+      position: relative;
+      z-index: 2;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .stage-controls {
+      position: absolute;
+      bottom: 16px;
+      display: flex;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 8px 14px;
+      border-radius: 999px;
+      z-index: 5;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .studio-sidebar {
+      background: #fff;
+      border-radius: 20px;
+      padding: 20px;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .color-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .swatch {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+    }
+
+    .mini-item-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 240px;
+      overflow-y: auto;
+    }
+
+    .mini-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .mini-item.active {
+      border-color: #f59e0b;
+      background: #fffbeb;
+      font-weight: 700;
+    }
+
+    /* Seller Admin Panel */
+    .admin-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .panel-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .panel-box h3 {
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+
+    .form-group {
       display: flex;
       flex-direction: column;
       gap: 5px;
       margin-bottom: 12px;
     }
 
-    .field label {
-      font-size: 12px;
-      font-weight: 600;
-      color: #334155;
-    }
-
-    .field input, .field select {
-      padding: 9px 12px;
-      border-radius: 10px;
-      border: 1px solid #cbd5e1;
-      font-size: 13px;
-      background: #fff;
-      user-select: text;
-    }
-
-    .action-btn {
-      border: none;
-      background: #1a1d24;
-      color: #fff;
-      padding: 9px 14px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.2s ease;
-    }
-
-    .action-btn:hover {
-      opacity: 0.9;
-    }
-
-    .action-btn.secondary {
-      background: rgba(26, 29, 36, 0.1);
-      color: #1a1d24;
-    }
-
-    .action-btn.danger {
-      background: #ef4444;
-      color: #fff;
-    }
-
-    .manage-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .manage-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #fff;
-      padding: 10px 14px;
-      border-radius: 12px;
-      border: 1px solid rgba(0,0,0,0.06);
-      gap: 10px;
-    }
-
-    /* Bottom Floating Dock */
-    footer {
-      display: flex;
-      justify-content: center;
-      padding-bottom: 24px;
-      z-index: 10;
-    }
-
-    .control-dock {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.72);
-      backdrop-filter: blur(16px);
-      padding: 10px 20px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.85);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-    }
-
-    .dock-label {
-      font-size: 12px;
-      font-weight: 600;
-      color: #4a5160;
-    }
-
-    .color-dots {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .dot {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      border: 2px solid #fff;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
-      transition: transform 0.2s;
-    }
-
-    .dot:hover {
-      transform: scale(1.2);
-    }
-
-    .divider {
-      width: 1px;
-      height: 18px;
-      background: rgba(0, 0, 0, 0.12);
-    }
-
-    .selected-readout {
+    .form-group label {
       font-size: 12px;
       font-weight: 700;
-      color: #1a1d24;
+      color: #475569;
+    }
+
+    .form-group input, .form-group select {
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      font-size: 13px;
     }
 
     /* Cart Drawer */
-    .cart-backdrop {
+    .drawer-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(15, 20, 30, 0.35);
-      backdrop-filter: blur(4px);
+      background: rgba(15, 23, 42, 0.5);
       display: none;
       justify-content: flex-end;
-      z-index: 50;
+      z-index: 60;
     }
 
-    .cart-backdrop.open {
-      display: flex;
-    }
+    .drawer-backdrop.open { display: flex; }
 
-    .cart-drawer {
+    .drawer {
       width: 100%;
-      max-width: 380px;
+      max-width: 400px;
+      background: #fff;
       height: 100%;
-      background: rgba(248, 250, 252, 0.96);
-      backdrop-filter: blur(20px);
       padding: 24px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      box-shadow: -12px 0 35px rgba(0, 0, 0, 0.15);
     }
 
-    .cart-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-bottom: 14px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    }
-
-    .close-btn {
-      border: none;
-      background: rgba(0, 0, 0, 0.07);
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .cart-items {
+    .cart-list {
       flex: 1;
       overflow-y: auto;
-      padding: 16px 0;
       display: flex;
       flex-direction: column;
       gap: 12px;
+      margin: 16px 0;
     }
 
-    .cart-item {
-      background: #fff;
-      border-radius: 14px;
-      padding: 12px 14px;
-      border: 1px solid rgba(0, 0, 0, 0.07);
+    .cart-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 10px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
       gap: 10px;
     }
 
-    .qty-controls {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .qty-btn {
-      width: 24px;
-      height: 24px;
-      border: none;
-      border-radius: 8px;
-      background: #e2e8f0;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .cart-footer {
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
-      padding-top: 16px;
-    }
-
-    .total-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 16px;
-      font-weight: 800;
-      margin-bottom: 14px;
-    }
-
-    @media (max-width: 900px) {
-      .cards-row { position: static; flex-direction: column; gap: 16px; }
-      .stage { flex-direction: column; }
+    @media (max-width: 860px) {
+      .studio-wrapper { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <div class="studio-room" id="studioRoom"></div>
-  <div class="studio-floor"></div>
-  <div class="bg-title" id="bgTitle">FIT</div>
+  <!-- Amazon / Daraz Style Header -->
+  <nav class="navbar">
+    <div class="brand" onclick="switchView('store')">FIT<span>STORE</span></div>
 
-  <!-- Top Navigation -->
-  <header>
-    <div class="nav-pill">
-      <button class="nav-btn" id="tab-studio" onclick="switchTab('studio')">Studio</button>
-      <button class="nav-btn" id="tab-lookbook" onclick="switchTab('lookbook')">Products & Lookbook</button>
-      <button class="nav-btn active" id="tab-tryon" onclick="switchTab('tryon')">Try-On 3D</button>
-      <button class="nav-btn" id="tab-admin" onclick="switchTab('admin')">+ Manage / Admin</button>
-      <button class="nav-btn" id="cartBtn" onclick="toggleCart(true)">Cart (1)</button>
+    <div class="search-box">
+      <select id="searchCategory" onchange="renderStore()">
+        <option value="All">All</option>
+        <option value="Sneakers">Sneakers</option>
+        <option value="Jackets">Jackets</option>
+        <option value="Streetwear">Streetwear</option>
+      </select>
+      <input type="text" id="searchInput" placeholder="Search sneakers, jackets, looks..." oninput="renderStore()" />
+      <button class="search-btn" onclick="renderStore()">Search</button>
     </div>
-  </header>
 
-  <!-- Main Spatial Stage -->
-  <main class="stage">
-    <!-- Try-On 3D View -->
-    <section class="tab-panel active" id="panel-tryon">
-      <div class="cards-row">
-        <div class="card-group" id="leftCardsGroup"></div>
-        <div class="card-group" id="rightCardsGroup"></div>
-      </div>
+    <div class="nav-actions">
+      <button class="nav-pill-btn active" id="btn-store" onclick="switchView('store')">Store Home</button>
+      <button class="nav-pill-btn" id="btn-studio3d" onclick="switchView('studio3d')">3D Try-On</button>
+      <button class="nav-pill-btn" id="btn-admin" onclick="switchView('admin')">+ Manage Site & Pics</button>
+      <button class="nav-pill-btn" id="cartHeaderBtn" onclick="toggleCart(true)">Cart (1)</button>
+    </div>
+  </nav>
 
-      <!-- Center Model -->
-      <div class="model-container" id="modelContainer">
-        <div class="model-shadow"></div>
-        <svg class="mannequin-svg" viewBox="0 0 220 440">
-          <circle cx="110" cy="46" r="22" fill="#f1c29b" />
-          <path d="M88 44 Q88 20 110 20 Q132 20 132 44 Q128 32 110 32 Q92 32 88 44 Z" fill="#1e222b" />
-          <rect x="103" y="66" width="14" height="14" rx="4" fill="#e5b188" />
-          <g id="jacketGroup" fill="#6326d9">
-            <rect x="74" y="78" width="72" height="118" rx="22" />
-            <rect x="48" y="84" width="26" height="108" rx="13" transform="rotate(6 60 84)" />
-            <rect x="146" y="84" width="26" height="108" rx="13" transform="rotate(-6 160 84)" />
-            <line x1="76" y1="106" x2="144" y2="106" stroke="rgba(0,0,0,0.22)" stroke-width="2" />
-            <line x1="75" y1="134" x2="145" y2="134" stroke="rgba(0,0,0,0.22)" stroke-width="2" />
-            <line x1="76" y1="162" x2="144" y2="162" stroke="rgba(0,0,0,0.22)" stroke-width="2" />
-            <line x1="110" y1="78" x2="110" y2="196" stroke="rgba(0,0,0,0.28)" stroke-width="2" />
-          </g>
-          <circle cx="52" cy="198" r="9" fill="#f1c29b" />
-          <circle cx="168" cy="198" r="9" fill="#f1c29b" />
-          <path d="M80 194 L108 194 L105 395 L83 395 Z" fill="#181b22" />
-          <path d="M112 194 L140 194 L137 395 L115 395 Z" fill="#181b22" />
-          <g id="modelShoes">
-            <rect x="76" y="394" width="32" height="16" rx="7" fill="#dc2626" class="shoe-upper" />
-            <rect x="74" y="407" width="35" height="6" rx="3" fill="#ffffff" class="shoe-sole" />
-            <rect x="112" y="394" width="32" height="16" rx="7" fill="#dc2626" class="shoe-upper" />
-            <rect x="111" y="407" width="35" height="6" rx="3" fill="#ffffff" class="shoe-sole" />
-          </g>
-        </svg>
-      </div>
-    </section>
+  <!-- Category Sub-Bar -->
+  <div class="sub-bar">
+    <div class="cat-chip active" onclick="filterByChip('All', this)">All Products</div>
+    <div class="cat-chip" onclick="filterByChip('Sneakers', this)">Sneakers</div>
+    <div class="cat-chip" onclick="filterByChip('Jackets', this)">Jackets</div>
+    <div class="cat-chip" onclick="filterByChip('Streetwear', this)">Streetwear</div>
+    <div class="cat-chip" onclick="switchView('studio3d')">Launch 3D Fitting Room</div>
+  </div>
 
-    <!-- Studio View -->
-    <section class="tab-panel" id="panel-studio">
-      <div class="glass-box">
-        <h2>FIT Spatial Studio</h2>
-        <p>Customize your outfit setup and add the active product straight to your cart.</p>
-        <div class="grid-cards">
-          <div class="item-card">
-            <div>
-              <h3>Active Footwear</h3>
-              <p id="studioShoeText" style="margin-top:8px;">Crimson Court 4 — $210</p>
-            </div>
-            <button class="action-btn" onclick="addSelectedToCart()">Add to Cart</button>
-          </div>
-          <div class="item-card">
-            <div>
-              <h3>Jacket Color</h3>
-              <div class="color-dots" id="studioColorDots" style="margin-top:10px;"></div>
-            </div>
-            <button class="action-btn secondary" onclick="switchTab('admin')">+ Add New Color</button>
-          </div>
-          <div class="item-card">
-            <div>
-              <h3>Brand Title</h3>
-              <p style="margin-top:8px;">Change big background text from Admin tab.</p>
-            </div>
-            <button class="action-btn secondary" onclick="switchTab('tryon')">Back to 3D Model</button>
-          </div>
-        </div>
-      </div>
-    </section>
+  <!-- Main Workspace -->
+  <div class="container">
 
-    <!-- Lookbook & Products View -->
-    <section class="tab-panel" id="panel-lookbook">
-      <div class="glass-box">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
+    <!-- 1. STORE VIEW (Amazon/Daraz Layout + Customizable Loop Strip) -->
+    <section class="view-section active" id="view-store">
+      <!-- Featured Lookbook / Loop Gallery -->
+      <div class="loop-strip">
+        <div class="loop-header">
           <div>
-            <h2>Products & Lookbook</h2>
-            <p style="margin-bottom:0;">All products added from the website appear here automatically.</p>
+            <h2 style="font-size:18px;">Featured Style Loop & Gallery</h2>
+            <p style="font-size:12px; color:#94a3b8;">Click any banner to equip in 3D, or replace these pics in "+ Manage Site & Pics".</p>
           </div>
-          <button class="action-btn" onclick="switchTab('admin')">+ Add Product & Photo</button>
+          <button class="btn btn-amber" onclick="switchView('admin')">Change Loop Pics</button>
         </div>
-        <div class="grid-cards" id="lookbookGrid"></div>
+        <div class="loop-track" id="loopTrack"></div>
+      </div>
+
+      <!-- Product Grid -->
+      <h2 style="font-size:18px; margin-bottom:14px;">Trending Products</h2>
+      <div class="products-grid" id="productsGrid"></div>
+    </section>
+
+    <!-- 2. 3D TRY-ON VIEW -->
+    <section class="view-section" id="view-studio3d">
+      <div class="studio-wrapper">
+        <div class="stage-3d">
+          <div class="stage-bg-word" id="stageBgWord">FIT</div>
+
+          <div class="model-box" id="modelBox">
+            <svg width="230" height="440" viewBox="0 0 220 440">
+              <!-- Head & Hair -->
+              <circle cx="110" cy="46" r="22" fill="#f1c29b" />
+              <path d="M88 44 Q88 20 110 20 Q132 20 132 44 Q128 32 110 32 Q92 32 88 44 Z" fill="#1e222b" />
+              <rect x="103" y="66" width="14" height="14" rx="4" fill="#e5b188" />
+              <!-- Jacket -->
+              <g id="modelJacket" fill="#6326d9">
+                <rect x="74" y="78" width="72" height="118" rx="22" />
+                <rect x="48" y="84" width="26" height="108" rx="13" transform="rotate(6 60 84)" />
+                <rect x="146" y="84" width="26" height="108" rx="13" transform="rotate(-6 160 84)" />
+                <line x1="76" y1="106" x2="144" y2="106" stroke="rgba(0,0,0,0.22)" stroke-width="2" />
+                <line x1="75" y1="134" x2="145" y2="134" stroke="rgba(0,0,0,0.22)" stroke-width="2" />
+                <line x1="76" y1="162" x2="144" y2="162" stroke="rgba(0,0,0,0.22)" stroke-width="2" />
+                <line x1="110" y1="78" x2="110" y2="196" stroke="rgba(0,0,0,0.28)" stroke-width="2" />
+              </g>
+              <!-- Hands -->
+              <circle cx="52" cy="198" r="9" fill="#f1c29b" />
+              <circle cx="168" cy="198" r="9" fill="#f1c29b" />
+              <!-- Trousers -->
+              <path d="M80 194 L108 194 L105 395 L83 395 Z" fill="#181b22" />
+              <path d="M112 194 L140 194 L137 395 L115 395 Z" fill="#181b22" />
+              <!-- Shoes -->
+              <g id="modelShoes">
+                <rect x="76" y="394" width="32" height="16" rx="7" fill="#dc2626" class="shoe-upper" />
+                <rect x="74" y="407" width="35" height="6" rx="3" fill="#ffffff" class="shoe-sole" />
+                <rect x="112" y="394" width="32" height="16" rx="7" fill="#dc2626" class="shoe-upper" />
+                <rect x="111" y="407" width="35" height="6" rx="3" fill="#ffffff" class="shoe-sole" />
+              </g>
+            </svg>
+          </div>
+
+          <!-- 3D View Controls -->
+          <div class="stage-controls">
+            <button class="btn btn-light" onclick="rotateModel(-20)">Rotate Left</button>
+            <button class="btn btn-light" onclick="resetModelView()">Front</button>
+            <button class="btn btn-light" onclick="rotateModel(20)">Rotate Right</button>
+            <button class="btn btn-light" onclick="zoomModel(0.1)">Zoom +</button>
+            <button class="btn btn-light" onclick="zoomModel(-0.1)">Zoom -</button>
+          </div>
+        </div>
+
+        <!-- 3D Fitting Room Controls -->
+        <div class="studio-sidebar">
+          <div>
+            <h3 style="font-size:17px;">3D Fitting Controls</h3>
+            <p id="active3DInfo" style="font-size:13px; color:#475569; margin-top:4px;">Crimson Court 4 — $210</p>
+          </div>
+
+          <div>
+            <label style="font-size:12px; font-weight:700; display:block; margin-bottom:8px;">Jacket Color</label>
+            <div class="color-row" id="studioSwatches"></div>
+          </div>
+
+          <div>
+            <label style="font-size:12px; font-weight:700; display:block; margin-bottom:8px;">Select Footwear / Item</label>
+            <div class="mini-item-list" id="studioProductList"></div>
+          </div>
+
+          <button class="btn btn-amber" style="padding:12px; font-size:14px;" onclick="addActive3DToCart()">Add Equipped Item to Cart</button>
+        </div>
       </div>
     </section>
 
-    <!-- Admin / Manage View (No HTML Editing Needed!) -->
-    <section class="tab-panel" id="panel-admin">
-      <div class="glass-box">
-        <h2>Website Control Panel (No Code Needed)</h2>
-        <p>Add your products, upload photos directly from your device, customize jacket colors, or edit brand title right here.</p>
-
-        <div class="admin-grid">
-          <!-- Add Product Form -->
-          <div class="form-card">
-            <h3>1. Add New Product & Photo</h3>
-            <div class="field">
-              <label>Product Name</label>
-              <input type="text" id="prodName" placeholder="e.g. Air Phantom Pro" />
-            </div>
-            <div class="field">
-              <label>Price ($)</label>
-              <input type="number" id="prodPrice" placeholder="e.g. 240" />
-            </div>
-            <div class="field">
-              <label>Where to Show?</label>
-              <select id="prodType">
-                <option value="both">Both (3D Try-On + Products Tab)</option>
-                <option value="lookbook">Products & Lookbook Tab Only</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>3D Model Shoe Color</label>
-              <input type="color" id="prodColor" value="#2563eb" style="height:38px; padding:3px;" />
-            </div>
-            <div class="field">
-              <label>Upload Product Photo (from Laptop/Phone)</label>
-              <input type="file" id="prodPhoto" accept="image/*" />
-            </div>
-            <button class="action-btn" style="width:100%;" onclick="addNewProductFromUI()">Save & Publish Product</button>
+    <!-- 3. ADMIN / SELLER CONTROL PANEL (Upload Your Own Pics & Products) -->
+    <section class="view-section" id="view-admin">
+      <div class="admin-columns">
+        <!-- Add Product to Store -->
+        <div class="panel-box">
+          <h3>1. Add Product & Photo to Store</h3>
+          <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" id="newProdName" placeholder="e.g. Nike Air Jordan Retro" />
           </div>
-
-          <!-- Brand & Jacket Color Settings -->
-          <div class="form-card">
-            <h3>2. Site Appearance & Colors</h3>
-            <div class="field">
-              <label>Big Background Title</label>
-              <div style="display:flex; gap:8px;">
-                <input type="text" id="brandInput" placeholder="FIT" style="flex:1;" />
-                <button class="action-btn" onclick="updateBrandTitle()">Update</button>
-              </div>
-            </div>
-
-            <div class="field" style="margin-top:16px;">
-              <label>Add New Jacket Color</label>
-              <input type="text" id="newColorName" placeholder="Color Name (e.g. Crimson Red)" />
-              <div style="display:flex; gap:8px; margin-top:6px;">
-                <input type="color" id="newColorHex" value="#e11d48" style="width:54px; height:38px; padding:2px;" />
-                <button class="action-btn" style="flex:1;" onclick="addNewJacketColor()">Add Color Dot</button>
-              </div>
-            </div>
-
-            <div style="margin-top:20px; padding-top:14px; border-top:1px solid #e2e8f0; display:flex; gap:8px; flex-wrap:wrap;">
-              <button class="action-btn secondary" onclick="exportSiteData()">Backup Data (JSON)</button>
-              <button class="action-btn danger" onclick="resetAllData()">Reset Default</button>
-            </div>
+          <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" id="newProdPrice" placeholder="e.g. 220" />
           </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select id="newProdCat">
+              <option value="Sneakers">Sneakers</option>
+              <option value="Jackets">Jackets</option>
+              <option value="Streetwear">Streetwear</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>3D Model Color</label>
+            <input type="color" id="newProdColor" value="#2563eb" style="height:38px;" />
+          </div>
+          <div class="form-group">
+            <label>Upload Product Picture</label>
+            <input type="file" id="newProdFile" accept="image/*" />
+          </div>
+          <button class="btn btn-amber" style="width:100%; padding:11px;" onclick="saveNewProduct()">Publish to Store</button>
         </div>
 
-        <!-- Manage Existing Products -->
-        <div class="form-card">
-          <h3>3. Manage All Products</h3>
-          <div class="manage-list" id="manageProductsList"></div>
+        <!-- Customize Loop / Banner Pictures -->
+        <div class="panel-box">
+          <h3>2. Add / Change Loop Gallery Pictures</h3>
+          <p style="font-size:12px; color:#64748b; margin-bottom:12px;">Upload your own banners/pics for the homepage Featured Style Loop.</p>
+          <div class="form-group">
+            <label>Loop Card Title</label>
+            <input type="text" id="loopTitleInput" placeholder="e.g. Winter Street Collection" />
+          </div>
+          <div class="form-group">
+            <label>Subtitle / Tag</label>
+            <input type="text" id="loopSubInput" placeholder="e.g. Up to 30% Off • Try in 3D" />
+          </div>
+          <div class="form-group">
+            <label>Choose Your Picture</label>
+            <input type="file" id="loopFileInput" accept="image/*" />
+          </div>
+          <button class="btn btn-dark" style="width:100%; padding:11px;" onclick="addLoopSlide()">Add Picture to Loop</button>
+
+          <div style="margin-top:16px; display:flex; flex-direction:column; gap:8px;" id="adminLoopList"></div>
+        </div>
+
+        <!-- Manage Store Products -->
+        <div class="panel-box">
+          <h3>3. Manage Store Inventory</h3>
+          <div style="display:flex; flex-direction:column; gap:8px; max-height:340px; overflow-y:auto;" id="adminProdList"></div>
+          <button class="btn btn-danger" style="width:100%; margin-top:14px;" onclick="resetStoreData()">Reset All to Default</button>
         </div>
       </div>
     </section>
-  </main>
 
-  <!-- Bottom Floating Dock -->
-  <footer>
-    <div class="control-dock">
-      <span class="dock-label">Jacket Color</span>
-      <div class="color-dots" id="dockColorDots"></div>
-      <div class="divider"></div>
-      <span class="selected-readout" id="activeShoeLabel">Crimson Court 4 — $210</span>
-      <button class="action-btn" onclick="addSelectedToCart()">+ Add</button>
-    </div>
-  </footer>
+  </div>
 
-  <!-- Cart Drawer -->
-  <div class="cart-backdrop" id="cartBackdrop" onclick="handleBackdropClick(event)">
-    <aside class="cart-drawer">
+  <!-- Slide-out Cart Drawer -->
+  <div class="drawer-backdrop" id="cartDrawerBackdrop" onclick="if(event.target.id==='cartDrawerBackdrop') toggleCart(false)">
+    <div class="drawer">
       <div>
-        <div class="cart-header">
-          <h3>Your Cart</h3>
-          <button class="close-btn" onclick="toggleCart(false)">×</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:12px; border-bottom:1px solid #e2e8f0;">
+          <h3>Shopping Cart</h3>
+          <button class="btn btn-light" onclick="toggleCart(false)">Close</button>
         </div>
-        <div class="cart-items" id="cartItemsList"></div>
+        <div class="cart-list" id="cartList"></div>
       </div>
 
-      <div class="cart-footer">
-        <div class="total-row">
-          <span>Total</span>
-          <span id="cartTotal">$210</span>
+      <div style="border-top:1px solid #e2e8f0; padding-top:14px;">
+        <div style="display:flex; justify-content:space-between; font-size:18px; font-weight:800; margin-bottom:12px;">
+          <span>Subtotal</span>
+          <span id="cartSubtotal">$210</span>
         </div>
-        <button class="action-btn" style="width:100%; padding:12px;" onclick="checkoutDemo()">Proceed to Checkout</button>
+        <button class="btn btn-amber" style="width:100%; padding:12px; font-size:14px;" onclick="placeOrderDemo()">Proceed to Checkout</button>
       </div>
-    </aside>
+    </div>
   </div>
 
   <script>
-    // Default Data
     const defaultProducts = [
-      { id: 1, name: 'Aero Slate V1', price: 165, color: '#64748b', sole: '#f8fafc', type: 'both', image: '' },
-      { id: 2, name: 'Crimson Court 4', price: 210, color: '#dc2626', sole: '#ffffff', type: 'both', image: '' },
-      { id: 3, name: 'Neon Pulse Low', price: 190, color: '#10b981', sole: '#e2e8f0', type: 'both', image: '' },
-      { id: 4, name: 'Solaris Runner', price: 180, color: '#f59e0b', sole: '#1e293b', type: 'both', image: '' }
+      { id: 1, name: 'Crimson Court 4', price: 210, category: 'Sneakers', rating: '4.9 (128)', color: '#dc2626', image: '' },
+      { id: 2, name: 'Neon Pulse Low', price: 190, category: 'Sneakers', rating: '4.8 (94)', color: '#10b981', image: '' },
+      { id: 3, name: 'Solaris Runner', price: 180, category: 'Sneakers', rating: '4.7 (76)', color: '#f59e0b', image: '' },
+      { id: 4, name: 'Aero Slate V1', price: 165, category: 'Sneakers', rating: '4.6 (61)', color: '#64748b', image: '' },
+      { id: 5, name: 'Tech Puffer Jacket', price: 240, category: 'Jackets', rating: '4.9 (210)', color: '#6326d9', image: '' },
+      { id: 6, name: 'Obsidian Cargo Shell', price: 220, category: 'Streetwear', rating: '4.8 (112)', color: '#1e293b', image: '' }
     ];
 
-    const defaultColors = [
+    const defaultLoopSlides = [
+      { id: 101, title: 'Crimson Court Edition', sub: 'Tap to try on 3D Model', color: '#dc2626', image: '' },
+      { id: 102, title: 'Neon Street Drop', sub: 'Fresh 2026 Collection', color: '#10b981', image: '' },
+      { id: 103, title: 'Cobalt Winter Puffer', sub: 'Custom 3D Fit Ready', color: '#0284c7', image: '' }
+    ];
+
+    const jacketPalette = [
       { name: 'Electric Violet', hex: '#6326d9' },
       { name: 'Obsidian Black', hex: '#1e293b' },
       { name: 'Cobalt Blue', hex: '#0284c7' },
-      { name: 'Emerald', hex: '#059669' }
+      { name: 'Emerald Green', hex: '#059669' },
+      { name: 'Crimson Red', hex: '#dc2626' }
     ];
 
-    // Load from LocalStorage
-    let products = JSON.parse(localStorage.getItem('fit_products')) || defaultProducts;
-    let jacketColors = JSON.parse(localStorage.getItem('fit_colors')) || defaultColors;
-    let brandTitleText = localStorage.getItem('fit_brand') || 'FIT';
+    let products = JSON.parse(localStorage.getItem('amazon3d_products')) || defaultProducts;
+    let loopSlides = JSON.parse(localStorage.getItem('amazon3d_loops')) || defaultLoopSlides;
+    let selectedCategory = 'All';
+    let active3DProduct = products[0];
+    let activeJacketName = 'Electric Violet';
+    let cart = [{ name: products[0].name, price: products[0].price, qty: 1, variant: 'Electric Violet' }];
 
-    let selectedShoe = products[1] || products[0];
-    let jacketLabel = jacketColors[0].name;
-    let cart = [{ name: selectedShoe.name, price: selectedShoe.price, qty: 1, jacket: jacketLabel }];
+    // 3D Model Transform State
+    let modelYaw = 0;
+    let modelScale = 1;
 
-    function saveToStorage() {
-      localStorage.setItem('fit_products', JSON.stringify(products));
-      localStorage.setItem('fit_colors', JSON.stringify(jacketColors));
-      localStorage.setItem('fit_brand', brandTitleText);
+    function persistData() {
+      localStorage.setItem('amazon3d_products', JSON.stringify(products));
+      localStorage.setItem('amazon3d_loops', JSON.stringify(loopSlides));
     }
 
-    // Spatial 3D Mouse Parallax
-    const studioRoom = document.getElementById('studioRoom');
-    const bgTitle = document.getElementById('bgTitle');
-    const modelContainer = document.getElementById('modelContainer');
+    function switchView(viewName) {
+      document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-pill-btn').forEach(b => b.classList.remove('active'));
 
-    document.addEventListener('mousemove', (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 2;
-      const y = (e.clientY / window.innerHeight - 0.5) * 2;
-
-      studioRoom.style.transform = `translate(${x * -14}px, ${y * -10}px)`;
-      bgTitle.style.transform = `translate(calc(-50% + ${x * -24}px), calc(-50% + ${y * -16}px))`;
-      modelContainer.style.transform = `translate(${x * 12}px, ${y * 6}px)`;
-    });
-
-    // Switch Navigation Tabs
-    function switchTab(tabName) {
-      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
-
-      const activeBtn = document.getElementById(`tab-${tabName}`);
-      const activePanel = document.getElementById(`panel-${tabName}`);
-      if (activeBtn) activeBtn.classList.add('active');
-      if (activePanel) activePanel.classList.add('active');
+      document.getElementById(`view-${viewName}`).classList.add('active');
+      const btn = document.getElementById(`btn-${viewName}`);
+      if (btn) btn.classList.add('active');
     }
 
-    // Generate Sneaker SVG Fallback
-    function getShoeSVG(color, sole) {
+    function filterByChip(cat, el) {
+      selectedCategory = cat;
+      document.getElementById('searchCategory').value = cat;
+      document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+      if (el) el.classList.add('active');
+      switchView('store');
+      renderStore();
+    }
+
+    function getFallbackSVG(color) {
       return `
-        <svg width="115" height="80" viewBox="0 0 120 80">
-          <path d="M15 55 Q20 32 45 32 L68 18 L84 38 Q105 40 110 56 L108 64 L12 64 Z" fill="#f1f5f9" stroke="#1e293b" stroke-width="2"/>
+        <svg width="140" height="95" viewBox="0 0 120 80">
+          <path d="M15 55 Q20 32 45 32 L68 18 L84 38 Q105 40 110 56 L108 64 L12 64 Z" fill="#e2e8f0" stroke="#1e293b" stroke-width="2"/>
           <path d="M42 35 L72 24 L82 42 L48 48 Z" fill="${color}"/>
-          <path d="M12 60 L108 60 L106 67 L14 67 Z" fill="${sole || '#1e293b'}"/>
+          <path d="M12 60 L108 60 L106 67 L14 67 Z" fill="#1e293b"/>
         </svg>
       `;
     }
 
-    // Render All Dynamic UI
-    function renderAll() {
-      bgTitle.textContent = brandTitleText;
-      document.getElementById('brandInput').value = brandTitleText;
+    function renderStore() {
+      const query = document.getElementById('searchInput').value.toLowerCase().trim();
+      const catFilter = document.getElementById('searchCategory').value;
 
-      // Render 3D Stage Cards
-      const stageItems = products.filter(p => p.type === 'both');
-      const mid = Math.ceil(stageItems.length / 2);
-      const leftItems = stageItems.slice(0, mid);
-      const rightItems = stageItems.slice(mid);
-
-      const renderStageCard = (item) => {
-        const isActive = selectedShoe && selectedShoe.id === item.id ? 'active' : '';
-        const visual = item.image
-          ? `<img src="${item.image}" class="shoe-card-img" alt="${item.name}" />`
-          : getShoeSVG(item.color, item.sole);
-
-        return `
-          <div class="shoe-card ${isActive}" onclick="selectShoeById(${item.id})">
-            ${visual}
-            <div class="shoe-info">
-              <div class="shoe-name">${item.name}</div>
-              <div class="shoe-price">$${item.price}</div>
-            </div>
+      // Render Loop Gallery
+      document.getElementById('loopTrack').innerHTML = loopSlides.map(slide => `
+        <div class="loop-card" onclick="applyLoopSlide(${slide.id})" style="background:${slide.color};">
+          ${slide.image ? `<img src="${slide.image}" alt="${slide.title}" />` : ''}
+          <div class="loop-overlay">
+            <div style="font-weight:800; font-size:15px;">${slide.title}</div>
+            <div style="font-size:12px; color:#e2e8f0;">${slide.sub}</div>
           </div>
-        `;
-      };
+        </div>
+      `).join('');
 
-      document.getElementById('leftCardsGroup').innerHTML = leftItems.map(renderStageCard).join('');
-      document.getElementById('rightCardsGroup').innerHTML = rightItems.map(renderStageCard).join('');
+      // Filter Products
+      const filtered = products.filter(p => {
+        const matchCat = catFilter === 'All' || p.category === catFilter;
+        const matchText = p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query);
+        return matchCat && matchText;
+      });
 
-      // Render Lookbook & Products Grid
-      document.getElementById('lookbookGrid').innerHTML = products.map(item => `
-        <div class="item-card">
+      document.getElementById('productsGrid').innerHTML = filtered.map(p => `
+        <div class="product-card">
           <div>
-            ${item.image ? `<img src="${item.image}" class="product-thumb" alt="${item.name}" />` : ''}
-            <span class="badge">${item.type === 'both' ? '3D + STORE' : 'CATALOG ITEM'}</span>
-            <h3>${item.name}</h3>
-            <p style="margin:6px 0 0;">Price: $${item.price}</p>
+            <div class="product-media">
+              <span class="cat-tag">${p.category}</span>
+              ${p.image ? `<img src="${p.image}" alt="${p.name}" />` : getFallbackSVG(p.color)}
+            </div>
+            <div class="prod-title">${p.name}</div>
+            <div class="prod-rating">★★★★★ ${p.rating}</div>
+            <div class="prod-price">$${p.price}</div>
           </div>
-          <div style="display:flex; gap:8px;">
-            <button class="action-btn" style="flex:1;" onclick="addProductToCart(${item.id})">Add to Cart</button>
-            ${item.type === 'both' ? `<button class="action-btn secondary" onclick="equipProduct(${item.id})">Try 3D</button>` : ''}
+          <div class="card-btns">
+            <button class="btn btn-amber" onclick="addToCartById(${p.id})">Add to Cart</button>
+            <button class="btn btn-dark" onclick="tryIn3D(${p.id})">Try 3D</button>
           </div>
         </div>
       `).join('');
+    }
 
-      // Render Admin Manage List
-      document.getElementById('manageProductsList').innerHTML = products.map(item => `
-        <div class="manage-row">
-          <div style="display:flex; align-items:center; gap:10px;">
-            ${item.image ? `<img src="${item.image}" style="width:40px; height:40px; border-radius:8px; object-fit:cover;" />` : `<div style="width:40px; height:40px; border-radius:8px; background:${item.color};"></div>`}
+    // 3D Studio Functions
+    function render3DStudio() {
+      document.getElementById('studioSwatches').innerHTML = jacketPalette.map(c => `
+        <div class="swatch" style="background:${c.hex};" title="${c.name}" onclick="setJacketColor('${c.hex}', '${c.name}')"></div>
+      `).join('');
+
+      document.getElementById('studioProductList').innerHTML = products.map(p => `
+        <div class="mini-item ${active3DProduct && active3DProduct.id === p.id ? 'active' : ''}" onclick="equip3DItem(${p.id})">
+          <span>${p.name}</span>
+          <span>$${p.price}</span>
+        </div>
+      `).join('');
+
+      if (active3DProduct) {
+        document.getElementById('active3DInfo').textContent = `${active3DProduct.name} — $${active3DProduct.price}`;
+        if (active3DProduct.category === 'Jackets') {
+          document.getElementById('modelJacket').setAttribute('fill', active3DProduct.color);
+        } else {
+          document.querySelectorAll('.shoe-upper').forEach(el => el.setAttribute('fill', active3DProduct.color));
+        }
+      }
+    }
+
+    function tryIn3D(id) {
+      equip3DItem(id);
+      switchView('studio3d');
+    }
+
+    function equip3DItem(id) {
+      const item = products.find(p => p.id === id);
+      if (!item) return;
+      active3DProduct = item;
+      render3DStudio();
+    }
+
+    function applyLoopSlide(id) {
+      const slide = loopSlides.find(s => s.id === id);
+      if (!slide) return;
+      setJacketColor(slide.color, slide.title);
+      switchView('studio3d');
+    }
+
+    function setJacketColor(hex, name) {
+      document.getElementById('modelJacket').setAttribute('fill', hex);
+      activeJacketName = name;
+    }
+
+    function rotateModel(deg) {
+      modelYaw += deg;
+      updateModelTransform();
+    }
+
+    function zoomModel(delta) {
+      modelScale = Math.min(1.4, Math.max(0.75, modelScale + delta));
+      updateModelTransform();
+    }
+
+    function resetModelView() {
+      modelYaw = 0;
+      modelScale = 1;
+      updateModelTransform();
+    }
+
+    function updateModelTransform() {
+      const box = document.getElementById('modelBox');
+      box.style.transform = `perspective(700px) rotateY(${modelYaw}deg) scale(${modelScale})`;
+    }
+
+    // Admin Panel Functions
+    function renderAdmin() {
+      document.getElementById('adminProdList').innerHTML = products.map(p => `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px; border:1px solid #e2e8f0; border-radius:8px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            ${p.image ? `<img src="${p.image}" style="width:36px; height:36px; object-fit:cover; border-radius:6px;" />` : `<div style="width:36px; height:36px; border-radius:6px; background:${p.color};"></div>`}
             <div>
-              <div style="font-weight:700; font-size:13px;">${item.name}</div>
-              <div style="font-size:11px; color:#64748b;">$${item.price} • ${item.type === 'both' ? '3D & Catalog' : 'Catalog Only'}</div>
+              <div style="font-size:13px; font-weight:700;">${p.name}</div>
+              <div style="font-size:11px; color:#64748b;">$${p.price} • ${p.category}</div>
             </div>
           </div>
-          <button class="action-btn danger" onclick="deleteProduct(${item.id})">Delete</button>
+          <button class="btn btn-danger" onclick="removeProduct(${p.id})">Remove</button>
         </div>
       `).join('');
 
-      // Render Jacket Color Dots
-      const dotsHTML = jacketColors.map(c => `
-        <button class="dot" style="background:${c.hex};" onclick="changeJacket('${c.hex}', '${c.name}')" title="${c.name}"></button>
+      document.getElementById('adminLoopList').innerHTML = loopSlides.map(s => `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px; border:1px solid #e2e8f0; border-radius:8px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            ${s.image ? `<img src="${s.image}" style="width:36px; height:36px; object-fit:cover; border-radius:6px;" />` : `<div style="width:36px; height:36px; border-radius:6px; background:${s.color};"></div>`}
+            <div style="font-size:12px; font-weight:700;">${s.title}</div>
+          </div>
+          <button class="btn btn-danger" onclick="removeLoopSlide(${s.id})">Delete</button>
+        </div>
       `).join('');
-      document.getElementById('dockColorDots').innerHTML = dotsHTML;
-      document.getElementById('studioColorDots').innerHTML = dotsHTML;
-
-      updateShoeDisplay();
-      renderCart();
     }
 
-    function selectShoeById(id) {
-      const found = products.find(p => p.id === id);
-      if (!found) return;
-      selectedShoe = found;
-      renderAll();
-    }
-
-    function equipProduct(id) {
-      selectShoeById(id);
-      switchTab('tryon');
-    }
-
-    function updateShoeDisplay() {
-      if (!selectedShoe) return;
-      const label = `${selectedShoe.name} — $${selectedShoe.price}`;
-      document.getElementById('activeShoeLabel').textContent = label;
-      document.getElementById('studioShoeText').textContent = label;
-
-      document.querySelectorAll('.shoe-upper').forEach(el => el.setAttribute('fill', selectedShoe.color || '#dc2626'));
-      document.querySelectorAll('.shoe-sole').forEach(el => el.setAttribute('fill', selectedShoe.sole || '#ffffff'));
-    }
-
-    function changeJacket(color, label = 'Custom') {
-      document.getElementById('jacketGroup').setAttribute('fill', color);
-      jacketLabel = label;
-    }
-
-    // Add New Product from Website Admin Panel
-    function addNewProductFromUI() {
-      const name = document.getElementById('prodName').value.trim();
-      const price = Number(document.getElementById('prodPrice').value);
-      const type = document.getElementById('prodType').value;
-      const color = document.getElementById('prodColor').value;
-      const photoInput = document.getElementById('prodPhoto');
+    function saveNewProduct() {
+      const name = document.getElementById('newProdName').value.trim();
+      const price = Number(document.getElementById('newProdPrice').value);
+      const category = document.getElementById('newProdCat').value;
+      const color = document.getElementById('newProdColor').value;
+      const fileInput = document.getElementById('newProdFile');
 
       if (!name || !price) {
-        alert('Please enter both Product Name and Price.');
+        alert('Please enter product name and price.');
         return;
       }
 
-      const finalizeAdd = (imageData) => {
-        const newProd = {
+      const finish = (imgData) => {
+        products.unshift({
           id: Date.now(),
           name,
           price,
+          category,
+          rating: '5.0 (New)',
           color,
-          sole: '#ffffff',
-          type,
-          image: imageData || ''
-        };
-        products.push(newProd);
-        saveToStorage();
+          image: imgData || ''
+        });
+        persistData();
         renderAll();
-
-        document.getElementById('prodName').value = '';
-        document.getElementById('prodPrice').value = '';
-        photoInput.value = '';
-        alert(`"${name}" added to your website!`);
-        switchTab('lookbook');
+        document.getElementById('newProdName').value = '';
+        document.getElementById('newProdPrice').value = '';
+        fileInput.value = '';
+        switchView('store');
       };
 
-      if (photoInput.files && photoInput.files[0]) {
+      if (fileInput.files && fileInput.files[0]) {
         const reader = new FileReader();
-        reader.onload = (e) => finalizeAdd(e.target.result);
-        reader.readAsDataURL(photoInput.files[0]);
+        reader.onload = e => finish(e.target.result);
+        reader.readAsDataURL(fileInput.files[0]);
       } else {
-        finalizeAdd('');
+        finish('');
       }
     }
 
-    function deleteProduct(id) {
-      if (products.length <= 1) {
-        alert('At least one product must remain.');
-        return;
+    function addLoopSlide() {
+      const title = document.getElementById('loopTitleInput').value.trim() || 'Featured Style';
+      const sub = document.getElementById('loopSubInput').value.trim() || 'Click to view in 3D';
+      const fileInput = document.getElementById('loopFileInput');
+
+      const finish = (imgData) => {
+        loopSlides.unshift({
+          id: Date.now(),
+          title,
+          sub,
+          color: '#1e293b',
+          image: imgData || ''
+        });
+        persistData();
+        renderAll();
+        document.getElementById('loopTitleInput').value = '';
+        document.getElementById('loopSubInput').value = '';
+        fileInput.value = '';
+        switchView('store');
+      };
+
+      if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => finish(e.target.result);
+        reader.readAsDataURL(fileInput.files[0]);
+      } else {
+        finish('');
       }
+    }
+
+    function removeProduct(id) {
+      if (products.length <= 1) return;
       products = products.filter(p => p.id !== id);
-      if (selectedShoe.id === id) {
-        selectedShoe = products[0];
-      }
-      saveToStorage();
+      persistData();
       renderAll();
     }
 
-    function updateBrandTitle() {
-      const val = document.getElementById('brandInput').value.trim();
-      if (!val) return;
-      brandTitleText = val;
-      saveToStorage();
+    function removeLoopSlide(id) {
+      loopSlides = loopSlides.filter(s => s.id !== id);
+      persistData();
       renderAll();
     }
 
-    function addNewJacketColor() {
-      const name = document.getElementById('newColorName').value.trim() || 'Custom Color';
-      const hex = document.getElementById('newColorHex').value;
-      jacketColors.push({ name, hex });
-      saveToStorage();
-      renderAll();
-      changeJacket(hex, name);
-      document.getElementById('newColorName').value = '';
-    }
-
-    function exportSiteData() {
-      const dataStr = JSON.stringify({ products, jacketColors, brandTitleText }, null, 2);
-      const blob = new Blob([dataStr], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'fit-website-backup.json';
-      a.click();
-    }
-
-    function resetAllData() {
-      if (!confirm('Reset all products and colors to default?')) return;
-      localStorage.removeItem('fit_products');
-      localStorage.removeItem('fit_colors');
-      localStorage.removeItem('fit_brand');
+    function resetStoreData() {
+      if (!confirm('Reset all products and loop pictures to default?')) return;
+      localStorage.removeItem('amazon3d_products');
+      localStorage.removeItem('amazon3d_loops');
       products = [...defaultProducts];
-      jacketColors = [...defaultColors];
-      brandTitleText = 'FIT';
-      selectedShoe = products[1];
+      loopSlides = [...defaultLoopSlides];
       renderAll();
     }
 
     // Cart Functions
     function toggleCart(open) {
-      const backdrop = document.getElementById('cartBackdrop');
+      const el = document.getElementById('cartDrawerBackdrop');
       if (open) {
         renderCart();
-        backdrop.classList.add('open');
+        el.classList.add('open');
       } else {
-        backdrop.classList.remove('open');
+        el.classList.remove('open');
       }
     }
 
-    function handleBackdropClick(e) {
-      if (e.target.id === 'cartBackdrop') toggleCart(false);
-    }
-
-    function addSelectedToCart() {
-      if (!selectedShoe) return;
-      addProductToCart(selectedShoe.id);
-    }
-
-    function addProductToCart(id) {
+    function addToCartById(id) {
       const prod = products.find(p => p.id === id);
       if (!prod) return;
-      const existing = cart.find(item => item.name === prod.name && item.jacket === jacketLabel);
-      if (existing) {
-        existing.qty += 1;
-      } else {
-        cart.push({ name: prod.name, price: prod.price, qty: 1, jacket: jacketLabel });
-      }
+      const found = cart.find(c => c.name === prod.name);
+      if (found) found.qty += 1;
+      else cart.push({ name: prod.name, price: prod.price, qty: 1, variant: prod.category });
       renderCart();
       toggleCart(true);
     }
 
-    function changeQty(index, delta) {
-      cart[index].qty += delta;
-      if (cart[index].qty <= 0) cart.splice(index, 1);
+    function addActive3DToCart() {
+      if (!active3DProduct) return;
+      const found = cart.find(c => c.name === active3DProduct.name && c.variant === activeJacketName);
+      if (found) found.qty += 1;
+      else cart.push({ name: active3DProduct.name, price: active3DProduct.price, qty: 1, variant: activeJacketName });
+      renderCart();
+      toggleCart(true);
+    }
+
+    function changeCartQty(idx, delta) {
+      cart[idx].qty += delta;
+      if (cart[idx].qty <= 0) cart.splice(idx, 1);
       renderCart();
     }
 
     function renderCart() {
-      const list = document.getElementById('cartItemsList');
-      const totalEl = document.getElementById('cartTotal');
-      const cartBtn = document.getElementById('cartBtn');
+      const count = cart.reduce((s, i) => s + i.qty, 0);
+      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      document.getElementById('cartHeaderBtn').textContent = `Cart (${count})`;
+      document.getElementById('cartSubtotal').textContent = `$${total}`;
 
-      const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
-      const totalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-
-      cartBtn.textContent = `Cart (${totalCount})`;
-      totalEl.textContent = `$${totalPrice}`;
-
+      const list = document.getElementById('cartList');
       if (cart.length === 0) {
-        list.innerHTML = `<p style="text-align:center; color:#64748b; padding:24px 0;">Your cart is empty.</p>`;
+        list.innerHTML = `<p style="text-align:center; color:#64748b; margin-top:30px;">Your cart is empty.</p>`;
         return;
       }
 
       list.innerHTML = cart.map((item, idx) => `
-        <div class="cart-item">
+        <div class="cart-row">
           <div>
-            <div style="font-weight:700; font-size:13px;">${item.name}</div>
-            <div style="font-size:11px; color:#64748b;">Jacket: ${item.jacket} • $${item.price} each</div>
+            <div style="font-weight:700; font-size:14px;">${item.name}</div>
+            <div style="font-size:12px; color:#64748b;">${item.variant} • $${item.price}</div>
           </div>
-          <div class="qty-controls">
-            <button class="qty-btn" onclick="changeQty(${idx}, -1)">-</button>
-            <span style="font-weight:700; font-size:13px;">${item.qty}</span>
-            <button class="qty-btn" onclick="changeQty(${idx}, 1)">+</button>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <button class="btn btn-light" style="padding:4px 8px;" onclick="changeCartQty(${idx}, -1)">-</button>
+            <span style="font-weight:700;">${item.qty}</span>
+            <button class="btn btn-light" style="padding:4px 8px;" onclick="changeCartQty(${idx}, 1)">+</button>
           </div>
         </div>
       `).join('');
     }
 
-    function checkoutDemo() {
-      if (cart.length === 0) {
-        alert('Your cart is empty!');
-        return;
-      }
-      const totalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-      alert(`Order summary ready! Total: $${totalPrice}`);
+    function placeOrderDemo() {
+      if (cart.length === 0) return alert('Cart is empty!');
+      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      alert(`Order Confirmed! Total Amount: $${total}`);
     }
 
-    // Initial Boot
+    function renderAll() {
+      renderStore();
+      render3DStudio();
+      renderAdmin();
+      renderCart();
+    }
+
     renderAll();
   </script>
 </body>
