@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FIT — Spatial Fashion & Footwear Showcase</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background: #d8dce3;
+      color: #1a1d24;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      perspective: 1200px;
+      user-select: none;
+    }
+
+    /* Studio Room Background */
+    .studio-room {
+      position: fixed;
+      inset: -40px;
+      background:
+        radial-gradient(circle at 50% 42%, #f4f6fa 0%, #cfd5df 55%, #aeb6c4 100%);
+      z-index: -2;
+      transition: transform 0.15s ease-out;
+    }
+
+    .studio-floor {
+      position: fixed;
+      bottom: -30px;
+      left: -10%;
+      width: 120%;
+      height: 36vh;
+      background: linear-gradient(to bottom, rgba(185, 193, 206, 0.4), rgba(145, 154, 168, 0.85));
+      border-top: 1px solid rgba(255, 255, 255, 0.5);
+      z-index: -1;
+    }
+
+    /* Giant Background Typography */
+    .bg-title {
+      position: fixed;
+      top: 44%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(140px, 24vw, 320px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: rgba(255, 255, 255, 0.55);
+      pointer-events: none;
+      z-index: 0;
+      transition: transform 0.2s ease-out;
+    }
+
+    /* Top Navigation Pill */
+    header {
+      display: flex;
+      justify-content: center;
+      padding-top: 22px;
+      z-index: 10;
+    }
+
+    .nav-pill {
+      display: flex;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(14px);
+      padding: 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-btn {
+      border: none;
+      background: transparent;
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #4a5160;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .nav-btn.active {
+      background: #1a1d24;
+      color: #fff;
+    }
+
+    /* Main Spatial Stage */
+    .stage {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+      z-index: 2;
+    }
+
+    /* Floating Sneaker Cards */
+    .cards-row {
+      position: absolute;
+      width: 92%;
+      max-width: 1280px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .card-group {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      pointer-events: auto;
+    }
+
+    .shoe-card {
+      width: 165px;
+      height: 215px;
+      background: rgba(255, 255, 255, 0.42);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      border-radius: 20px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 18px 35px rgba(25, 32, 48, 0.08);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.3s ease;
+    }
+
+    .shoe-card.far {
+      transform: scale(0.84) translateY(-10px);
+      opacity: 0.78;
+    }
+
+    .shoe-card:hover {
+      transform: translateY(-10px) scale(1.04);
+      box-shadow: 0 24px 45px rgba(25, 32, 48, 0.14);
+      border-color: #ffffff;
+    }
+
+    .shoe-card.active {
+      border: 2px solid #5b2be0;
+      background: rgba(255, 255, 255, 0.72);
+      transform: translateY(-8px) scale(1.05);
+    }
+
+    .shoe-info {
+      text-align: center;
+    }
+
+    .shoe-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a1d24;
+    }
+
+    .shoe-price {
+      font-size: 11px;
+      color: #5b6375;
+      margin-top: 3px;
+    }
+
+    /* Center Interactive Model */
+    .model-container {
+      position: relative;
+      width: 260px;
+      height: 460px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      z-index: 5;
+      transition: transform 0.2s ease-out;
+    }
+
+    .model-shadow {
+      position: absolute;
+      bottom: 8px;
+      width: 150px;
+      height: 22px;
+      background: radial-gradient(ellipse at center, rgba(20, 25, 35, 0.35) 0%, transparent 72%);
+      border-radius: 50%;
+    }
+
+    /* Stylized Vector Human Figure with Swappable Outfit & Shoes */
+    .mannequin-svg {
+      width: 220px;
+      height: 440px;
+      filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.12));
+    }
+
+    /* Bottom Floating Dock */
+    footer {
+      display: flex;
+      justify-content: center;
+      padding-bottom: 24px;
+      z-index: 10;
+    }
+
+    .control-dock {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(16px);
+      padding: 10px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .dock-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #4a5160;
+    }
+
+    .color-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+      transition: transform 0.2s;
+    }
+
+    .dot:hover {
+      transform: scale(1.2);
+    }
+
+    .divider {
+      width: 1px;
+      height: 18px;
+      background: rgba(0, 0, 0, 0.12);
+    }
+
+    .selected-readout {
+      font-size: 12px;
+      font-weight: 700;
+      color: #1a1d24;
+    }
+
+    @media (max-width: 900px) {
+      .shoe-card.far { display: none; }
+      .shoe-card { width: 125px; height: 175px; padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="studio-room" id="studioRoom"></div>
+  <div class="studio-floor"></div>
+  <div class="bg-title" id="bgTitle">FIT</div>
+
+  <!-- Top Navigation -->
+  <header>
+    <div class="nav-pill">
+      <button class="nav-btn">Studio</button>
+      <button class="nav-btn">Lookbook</button>
+      <button class="nav-btn active">Try-On 3D</button>
+      <button class="nav-btn">Cart (1)</button>
+    </div>
+  </header>
+
+  <!-- Main Spatial Stage -->
+  <main class="stage">
+    <div class="cards-row">
+      <!-- Left Cards -->
+      <div class="card-group">
+        <div class="shoe-card far" data-name="Aero Slate V1" data-price="$165" data-color="#64748b" data-sole="#f8fafc" onclick="selectShoe(this)">
+          <svg width="110" height="75" viewBox="0 0 120 80">
+            <path d="M15 55 Q20 35 45 35 L68 22 L82 40 Q105 42 110 56 L108 64 L12 64 Z" fill="#64748b"/>
+            <path d="M12 60 L108 60 L106 67 L14 67 Z" fill="#f8fafc"/>
+          </svg>
+          <div class="shoe-info">
+            <div class="shoe-name">Aero Slate V1</div>
+            <div class="shoe-price">$165</div>
+          </div>
+        </div>
+
+        <div class="shoe-card active" data-name="Crimson Court 4" data-price="$210" data-color="#dc2626" data-sole="#ffffff" onclick="selectShoe(this)">
+          <svg width="115" height="80" viewBox="0 0 120 80">
+            <path d="M15 55 Q20 32 45 32 L68 18 L84 38 Q105 40 110 56 L108 64 L12 64 Z" fill="#f1f5f9" stroke="#1e293b" stroke-width="2"/>
+            <path d="M42 35 L72 24 L82 42 L48 48 Z" fill="#dc2626"/>
+            <path d="M12 60 L108 60 L106 67 L14 67 Z" fill="#1e293b"/>
+          </svg>
+          <div class="shoe-info">
+            <div class="shoe-name">Crimson Court 4</div>
+            <div class="shoe-price">$210</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Cards -->
+      <div class="card-group">
+        <div class="shoe-card" data-name="Neon Pulse Low" data-price="$190" data-color="#10b981" data-sole="#e2e8f0" onclick="selectShoe(this)">
+          <svg width="115" height="80" viewBox="0 0 120 80">
+            <path d="M15 55 Q22 36 48 36 L70 25 L85 40 Q105 42 110 56 L108 64 L12 64 Z" fill="#cbd5e1"/>
+            <path d="M25 56 L95 56 L92 63 L25 63 Z" fill="#10b981"/>
+            <path d="M12 62 L108 62 L106 68 L14 68 Z" fill="#ffffff"/>
+          </svg>
+          <div class="shoe-info">
+            <div class="shoe-name">Neon Pulse Low</div>
+            <div class="shoe-price">$190</div>
+          </div>
+        </div>
+
+        <div class="shoe-card far" data-name="Solaris Runner" data-price="$180" data-color="#f59e0b" data-sole="#1e293b" onclick="selectShoe(this)">
+          <svg width="110" height="75" viewBox="0 0 120 80">
+            <path d="M15 55 Q20 35 45 35 L68 22 L82 40 Q105 42 110 56 L108 64 L12 64 Z" fill="#f8fafc"/>
+            <path d="M50 32 L78 28 L86 46 L54 46 Z" fill="#f59e0b"/>
+            <path d="M12 60 L108 60 L106 67 L14 67 Z" fill="#1e293b"/>
+          </svg>
+          <div class="shoe-info">
+            <div class="shoe-name">Solaris Runner</div>
+            <div class="shoe-price">$180</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center Model -->
+    <div class="model-container" id="modelContainer">
+      <div class="model-shadow"></div>
+      <svg class="mannequin-svg" viewBox="0 0 220 440">
+        <!-- Head & Hair -->
+        <circle cx="110" cy="46" r="22" fill="#f1c29b" />
+        <path d="M88 44 Q88 20 110 20 Q132 20 132 44 Q128 32 110 32 Q92 32 88 44 Z" fill="#1e222b" />
+        <!-- Neck -->
+        <rect x="103" y="66" width="14" height="14" rx="4" fill="#e5b188" />
+        <!-- Puffer Jacket (Color Dynamic) -->
+        <g id="jacketGroup" fill="#6326d9">
+          <rect x="74" y="78" width="72" height="118" rx="22" />
+          <!-- Left & Right Sleeves -->
+          <rect x="48" y="84" width="26" height="108" rx="13" transform="rotate(6 60 84)" />
+          <rect x="146" y="84" width="26" height="108" rx="13" transform="rotate(-6 160 84)" />
+          <!-- Puffer Ribs -->
+          <line x1="76" y1="106" x2="144" y2="106" stroke="rgba(0,0,0,0.22)" stroke-width="2" />
+          <line x1="75" y1="134" x2="145" y2="134" stroke="rgba(0,0,0,0.22)" stroke-width="2" />
+          <line x1="76" y1="162" x2="144" y2="162" stroke="rgba(0,0,0,0.22)" stroke-width="2" />
+          <line x1="110" y1="78" x2="110" y2="196" stroke="rgba(0,0,0,0.28)" stroke-width="2" />
+        </g>
+        <!-- Hands -->
+        <circle cx="52" cy="198" r="9" fill="#f1c29b" />
+        <circle cx="168" cy="198" r="9" fill="#f1c29b" />
+        <!-- Trousers -->
+        <path d="M80 194 L108 194 L105 395 L83 395 Z" fill="#181b22" />
+        <path d="M112 194 L140 194 L137 395 L115 395 Z" fill="#181b22" />
+        <!-- Left & Right Sneakers (Dynamic) -->
+        <g id="modelShoes">
+          <!-- Left Shoe -->
+          <rect x="76" y="394" width="32" height="16" rx="7" fill="#dc2626" class="shoe-upper" />
+          <rect x="74" y="407" width="35" height="6" rx="3" fill="#ffffff" class="shoe-sole" />
+          <!-- Right Shoe -->
+          <rect x="112" y="394" width="32" height="16" rx="7" fill="#dc2626" class="shoe-upper" />
+          <rect x="111" y="407" width="35" height="6" rx="3" fill="#ffffff" class="shoe-sole" />
+        </g>
+      </svg>
+    </div>
+  </main>
+
+  <!-- Bottom Floating Dock -->
+  <footer>
+    <div class="control-dock">
+      <span class="dock-label">Jacket Color</span>
+      <div class="color-dots">
+        <button class="dot" style="background:#6326d9;" onclick="changeJacket('#6326d9')" title="Electric Violet"></button>
+        <button class="dot" style="background:#1e293b;" onclick="changeJacket('#1e293b')" title="Obsidian Black"></button>
+        <button class="dot" style="background:#0284c7;" onclick="changeJacket('#0284c7')" title="Cobalt Blue"></button>
+        <button class="dot" style="background:#059669;" onclick="changeJacket('#059669')" title="Emerald"></button>
+      </div>
+      <div class="divider"></div>
+      <span class="selected-readout" id="activeShoeLabel">Crimson Court 4 — $210</span>
+    </div>
+  </footer>
+
+  <script>
+    // 1. Spatial 3D Mouse Parallax
+    const studioRoom = document.getElementById('studioRoom');
+    const bgTitle = document.getElementById('bgTitle');
+    const modelContainer = document.getElementById('modelContainer');
+
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 2;
+      const y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+      studioRoom.style.transform = `translate(${x * -14}px, ${y * -10}px)`;
+      bgTitle.style.transform = `translate(calc(-50% + ${x * -24}px), calc(-50% + ${y * -16}px))`;
+      modelContainer.style.transform = `translate(${x * 12}px, ${y * 6}px)`;
+    });
+
+    // 2. Select Footwear Card & Equip on Model
+    function selectShoe(card) {
+      document.querySelectorAll('.shoe-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+
+      const name = card.getAttribute('data-name');
+      const price = card.getAttribute('data-price');
+      const color = card.getAttribute('data-color');
+      const sole = card.getAttribute('data-sole');
+
+      document.getElementById('activeShoeLabel').textContent = `${name} — ${price}`;
+
+      document.querySelectorAll('.shoe-upper').forEach(el => el.setAttribute('fill', color));
+      document.querySelectorAll('.shoe-sole').forEach(el => el.setAttribute('fill', sole));
+    }
+
+    // 3. Change Jacket Color
+    function changeJacket(color) {
+      document.getElementById('jacketGroup').setAttribute('fill', color);
+    }
+  </script>
+</body>
+</html>
