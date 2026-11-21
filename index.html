@@ -1,92 +1,166 @@
 <!DOCTYPE html>
-<html lang="bn">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>FIT — Virtual Fashion Store</title>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FIT</title>
 <style>
-:root{--bg1:#e9ebf3;--bg2:#b9bdd0;--ink:#1d1f2b;--glass:rgba(255,255,255,.45);--line:rgba(255,255,255,.7);--big:rgba(255,255,255,.55);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#2a2d3c;--bg2:#12131b;--ink:#f2f3f8;--glass:rgba(255,255,255,.08);--line:rgba(255,255,255,.18);--big:rgba(255,255,255,.07)}}
-:root[data-theme="dark"]{--bg1:#2a2d3c;--bg2:#12131b;--ink:#f2f3f8;--glass:rgba(255,255,255,.08);--line:rgba(255,255,255,.18);--big:rgba(255,255,255,.07)}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
+:root{--bg1:#e9ebf3;--bg2:#b9bdd0;--ink:#1d1f2b;--glass:rgba(255,255,255,.6);--line:rgba(255,255,255,.85);--big:rgba(255,255,255,.55)}
+@media(prefers-color-scheme:dark){:root{--bg1:#2a2d3c;--bg2:#12131b;--ink:#f2f3f8;--glass:rgba(255,255,255,.1);--line:rgba(255,255,255,.18);--big:rgba(255,255,255,.07)}}
 *{box-sizing:border-box;margin:0}
 html,body{height:100%}
-body{background:radial-gradient(ellipse at 50% 30%,var(--bg1),var(--bg2));color:var(--ink);font-family:Inter,system-ui,-apple-system,"Noto Sans Bengali",sans-serif;overflow:hidden}
-.stage{position:relative;height:100%;overflow:hidden;perspective:1200px}
-.big{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:min(46vw,420px);font-weight:900;letter-spacing:.05em;color:var(--big);user-select:none;transition:transform .2s}
-nav{position:absolute;top:16px;left:50%;transform:translateX(-50%);display:flex;gap:4px;padding:4px;border-radius:99px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px);z-index:5;max-width:94vw;overflow-x:auto}
+body{background:radial-gradient(ellipse at 50% 30%,var(--bg1),var(--bg2));color:var(--ink);font-family:system-ui,"Noto Sans Bengali",sans-serif;overflow:hidden}
+body.adm{overflow:auto}
+#site{position:relative;height:100%;overflow:hidden;perspective:1200px}
+body.adm #site{display:none}
+#admin{display:none;max-width:900px;margin:0 auto;padding:16px}
+body.adm #admin{display:block}
+.big{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:min(46vw,420px);font-weight:900;color:var(--big);user-select:none;transition:transform .2s}
+nav{position:absolute;top:16px;left:50%;transform:translateX(-50%);display:flex;gap:4px;padding:4px;border-radius:99px;background:var(--glass);border:1px solid var(--line);z-index:5;max-width:94vw;overflow-x:auto}
 nav button{border:0;background:none;color:inherit;font:inherit;font-size:12px;padding:8px 14px;border-radius:99px;cursor:pointer;white-space:nowrap}
 nav button.on{background:var(--ink);color:var(--bg1)}
-.model{position:absolute;left:50%;bottom:9%;transform:translateX(-50%);height:min(68vh,560px);z-index:3;transition:transform .2s}
+.model{position:absolute;left:50%;bottom:12%;transform:translateX(-50%);height:min(64vh,540px);z-index:3}
 .track{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:22px;z-index:2;transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .4s}
 .track.out{opacity:0;transform:translateX(-80px)}
-.side{display:flex;gap:18px;align-items:center}
-.card{width:clamp(88px,14vw,150px);aspect-ratio:3/4.4;border-radius:18px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(10px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:transform .3s,box-shadow .3s;transform:rotateY(var(--r,0deg))}
-.side.l .card{--r:18deg}.side.r .card{--r:-18deg}
-.card:hover,.card.sel{transform:rotateY(0) scale(1.08);box-shadow:0 20px 40px rgba(0,0,0,.18)}
-.card svg{width:70%;height:auto}
-.card small{font-size:11px;opacity:.75;text-align:center;padding:0 6px}
-.gap{width:clamp(120px,22vw,230px)}
-.info{position:absolute;bottom:3%;left:50%;transform:translateX(-50%);z-index:5;text-align:center;font-size:13px;padding:10px 18px;border-radius:99px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px)}
-@media(max-width:600px){.gap{width:70px}.side{gap:10px}.track{gap:10px}.side.far{display:none}}
-</style>
-</head>
+.side{display:flex;gap:16px;align-items:center}
+.card{width:clamp(80px,13vw,140px);aspect-ratio:3/4.4;border-radius:18px;background:var(--glass);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;transition:transform .3s,box-shadow .3s}
+.card:hover,.card.sel{transform:scale(1.08);box-shadow:0 18px 36px rgba(0,0,0,.2)}
+.card svg,.card img{width:70%;height:auto;max-height:60%;object-fit:contain}
+.card small{font-size:11px;text-align:center;padding:0 6px}
+.card b{font-size:11px;opacity:.7}
+.gap{width:clamp(110px,22vw,230px)}
+.info{position:absolute;bottom:2.5%;left:50%;transform:translateX(-50%);z-index:5;text-align:center;font-size:13px;padding:10px 16px;border-radius:20px;background:var(--glass);border:1px solid var(--line);max-width:94vw;display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:center}
+.info a{padding:6px 12px;border-radius:99px;background:#25a244;color:#fff;text-decoration:none;font-weight:700}
+.sz{border:1px solid var(--ink);background:none;color:inherit;border-radius:8px;padding:4px 9px;font:inherit;font-size:12px;cursor:pointer}
+.sz.on{background:var(--ink);color:var(--bg1)}
+@media(max-width:600px){.gap{width:60px}.side{gap:8px}.track{gap:8px}}
+/* admin */
+.box{background:var(--glass);border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+.box h2{font-size:16px;margin-bottom:8px}
+.box label{display:block;font-size:12px;margin:8px 0 2px;opacity:.75}
+.box input{padding:8px;border:1px solid #9998;border-radius:8px;font:inherit;background:var(--glass);color:inherit;min-width:0}
+.box input[type=color]{padding:0;width:42px;height:36px}
+.row{display:flex;gap:6px;margin:6px 0;flex-wrap:wrap;align-items:center}
+.row .n{flex:2 1 120px}.row .p{width:80px}.row .s{flex:1 1 110px}.row .i{flex:3 1 160px}
+.ab{padding:9px 14px;border:0;border-radius:8px;background:var(--ink);color:var(--bg1);font:inherit;cursor:pointer}
+.ab.g{background:#25a244;color:#fff}.ab.r{background:#c62828;color:#fff;padding:8px 10px}
+#msg{position:sticky;top:0;z-index:9;padding:10px;border-radius:8px;background:#fff3b0;color:#222;display:none;margin:8px 0}
+</style></head>
 <body>
-<div class="stage" id="stage">
-  <div class="big" id="big">FIT</div>
-  <nav id="nav"></nav>
-  <div class="track" id="track"></div>
-  <svg class="model" id="model" viewBox="0 0 200 520" aria-label="Model">
+<div id="site">
+  <div class="big" id="big">FIT</div><nav id="nav"></nav><div class="track" id="track"></div>
+  <svg class="model" id="model" viewBox="0 0 200 520">
     <circle cx="100" cy="42" r="26" fill="#e8c4a8"/>
     <path d="M74 36q26-34 52 0q-6-14-26-14t-26 14z" fill="#1b1b22"/>
     <rect x="90" y="64" width="20" height="18" fill="#e8c4a8"/>
     <path id="jacket" d="M52 92q48-22 96 0l16 150-28 6-4-84-8 86h-72l-8-86-4 84-28-6z" fill="#6a3fd0"/>
-    <path d="M100 86v156" stroke="#00000033" stroke-width="2"/>
     <path id="pants" d="M64 250h72l8 230h-30l-14-170-14 170h-30z" fill="#16161d"/>
     <ellipse id="shoeL" cx="78" cy="492" rx="26" ry="12" fill="#f4f4f4" stroke="#999"/>
     <ellipse id="shoeR" cx="124" cy="492" rx="26" ry="12" fill="#f4f4f4" stroke="#999"/>
   </svg>
-  <div class="info" id="info">পোশাক বা জুতার কার্ডে ক্লিক করুন — মডেলকে পরিয়ে দেখুন</div>
+  <div class="info" id="info">কার্ডে ক্লিক করুন</div>
+</div>
+<div id="admin"><h1 style="font-size:22px">🛠️ Admin Panel <a href="./" style="font-size:13px;margin-left:10px;color:inherit">← সাইটে ফিরুন</a></h1><div id="msg"></div><div id="app"></div>
+  <div class="box"><h2>GitHub-এ সেভ</h2>
+    <label>Username</label><input id="o"><label>Repository</label><input id="r">
+    <label>Token (এই ব্রাউজারে মনে থাকবে)</label><input id="t" type="password" style="width:100%">
+    <div class="row" style="margin-top:12px"><button class="ab g" onclick="save()">GitHub-এ সেভ করুন</button><button class="ab" onclick="dl()">products.json ডাউনলোড</button></div>
+  </div>
 </div>
 <script>
-const shoe=c=>`<svg viewBox="0 0 100 60"><path d="M6 40q4-22 30-22l12 10q24 2 44 8v14H6z" fill="${c}"/><rect x="6" y="48" width="88" height="8" rx="4" fill="#fff" stroke="#bbb"/></svg>`;
-const coat=c=>`<svg viewBox="0 0 100 100"><path d="M26 20q24-14 48 0l16 36-10 4-4-14v44H24V46l-4 14-10-4z" fill="${c}"/></svg>`;
-const pant=c=>`<svg viewBox="0 0 100 100"><path d="M28 8h44l6 88H56L50 40l-6 56H22z" fill="${c}"/></svg>`;
-const DATA={
- Outerwear:{icon:coat,t:'jacket',items:[['Puffer Purple','#6a3fd0'],['Forest Parka','#2f6b4f'],['Sunset Orange','#e5622d'],['Ice Blue','#6fa6d8'],['Charcoal','#3a3d48']]},
- Bottoms:{icon:pant,t:'pants',items:[['Black Slim','#16161d'],['Denim','#35507a'],['Khaki','#b79d6b'],['Olive Cargo','#5b6240'],['Grey','#6b6f7b']]},
- Shoes:{icon:shoe,t:'shoes',items:[['Runner Black','#1b1b22'],['Retro Red','#d11f2c'],['Court White','#ececec'],['Trail Green','#3f7a4f'],['Royal Blue','#2b4fd0']]}
-};
 const $=id=>document.getElementById(id);
-const nav=$('nav'),track=$('track');
-let cur='Outerwear';
-Object.keys(DATA).forEach(k=>{const b=document.createElement('button');b.textContent=k;b.onclick=()=>show(k);b.dataset.k=k;nav.appendChild(b)});
-function apply(type,c,name){
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const ICON={
+ jacket:c=>`<svg viewBox="0 0 100 100"><path d="M26 20q24-14 48 0l16 36-10 4-4-14v44H24V46l-4 14-10-4z" fill="${c}"/></svg>`,
+ pants:c=>`<svg viewBox="0 0 100 100"><path d="M28 8h44l6 88H56L50 40l-6 56H22z" fill="${c}"/></svg>`,
+ shoes:c=>`<svg viewBox="0 0 100 60"><path d="M6 40q4-22 30-22l12 10q24 2 44 8v14H6z" fill="${c}"/><rect x="6" y="48" width="88" height="8" rx="4" fill="#fff" stroke="#bbb"/></svg>`};
+const D=(n,c,p,s)=>({name:n,color:c,price:p,sizes:s||'S,M,L,XL',img:''});
+let CFG={brand:'FIT',whatsapp:'',categories:[
+ {name:'Outerwear',type:'jacket',items:[D('Puffer Purple','#6a3fd0','3500'),D('Forest Parka','#2f6b4f','4200'),D('Sunset Orange','#e5622d','3800'),D('Ice Blue','#6fa6d8','3600'),D('Charcoal','#3a3d48','3900')]},
+ {name:'Bottoms',type:'pants',items:[D('Black Slim','#16161d','1800','30,32,34,36'),D('Denim','#35507a','2200','30,32,34,36'),D('Khaki','#b79d6b','1900','30,32,34,36'),D('Olive Cargo','#5b6240','2400','30,32,34,36'),D('Grey','#6b6f7b','1700','30,32,34,36')]},
+ {name:'Shoes',type:'shoes',items:[D('Runner Black','#1b1b22','3200','39,40,41,42,43'),D('Retro Red','#d11f2c','3400','39,40,41,42,43'),D('Court White','#ececec','2900','39,40,41,42,43'),D('Trail Green','#3f7a4f','3600','39,40,41,42,43'),D('Royal Blue','#2b4fd0','3300','39,40,41,42,43')]}
+]};
+fetch('products.json?'+Date.now()).then(r=>r.ok?r.json():Promise.reject()).then(j=>CFG=j).catch(()=>{})
+ .finally(()=>location.hash==='#admin'?initAdmin():initSite());
+addEventListener('hashchange',()=>location.reload());
+
+/* ---------- SITE ---------- */
+let sel=null,size='';
+const sizesOf=it=>(it.sizes||'').split(',').map(s=>s.trim()).filter(Boolean);
+function initSite(){
+ $('big').textContent=CFG.brand;document.title=CFG.brand+' — Fashion Store';
+ CFG.categories.forEach((c,i)=>{const b=document.createElement('button');b.textContent=c.name;b.onclick=()=>show(i);$('nav').append(b)});
+ if(CFG.categories.length)show(0);
+ $('site').addEventListener('pointermove',e=>{const x=e.clientX/innerWidth-.5,y=e.clientY/innerHeight-.5;
+  $('big').style.transform=`translate(${x*-30}px,${y*-20}px)`;$('model').style.transform=`translateX(calc(-50% + ${x*14}px))`});
+}
+function pick(type,it){
+ sel=it;size=sizesOf(it)[0]||'';
+ const c=it.color;
  if(type==='jacket')$('jacket').setAttribute('fill',c);
  if(type==='pants')$('pants').setAttribute('fill',c);
  if(type==='shoes'){$('shoeL').setAttribute('fill',c);$('shoeR').setAttribute('fill',c)}
- $('info').textContent=name+' — পরানো হয়েছে ✓';
+ info();
+}
+function info(){
+ const f=$('info');f.innerHTML='';
+ f.append(sel.name+(sel.price?' — ৳'+sel.price:''));
+ sizesOf(sel).forEach(s=>{const b=document.createElement('button');b.textContent=s;b.className='sz'+(s===size?' on':'');b.onclick=()=>{size=s;info()};f.append(b)});
+ if(CFG.whatsapp){const a=document.createElement('a');a.textContent='অর্ডার করুন';a.target='_blank';
+  a.href='https://wa.me/'+CFG.whatsapp.replace(/\D/g,'')+'?text='+encodeURIComponent(sel.name+(size?' (সাইজ '+size+')':'')+' অর্ডার করতে চাই');f.append(a)}
 }
 function show(k){
- cur=k;
- [...nav.children].forEach(b=>b.classList.toggle('on',b.dataset.k===k));
- track.classList.add('out');
+ [...$('nav').children].forEach((b,i)=>b.classList.toggle('on',i===k));
+ const t=$('track');t.classList.add('out');
  setTimeout(()=>{
-  const d=DATA[k];
-  const mk=(arr,cls)=>`<div class="side ${cls}">`+arr.map(([n,c])=>`<div class="card" data-n="${n}" data-c="${c}">${d.icon(c)}<small>${n}</small></div>`).join('')+'</div>';
-  track.innerHTML=mk(d.items.slice(0,2),'l')+'<div class="gap"></div>'+mk(d.items.slice(2),'r');
-  track.querySelectorAll('.card').forEach(el=>el.onclick=()=>{track.querySelectorAll('.card').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');apply(d.t,el.dataset.c,el.dataset.n)});
-  track.style.transform='translateX(80px)';
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{track.classList.remove('out');track.style.transform=''}));
+  const cat=CFG.categories[k],its=cat.items.slice(0,6),h=Math.floor(its.length/2);
+  const mk=a=>'<div class="side">'+a.map(it=>`<div class="card">${it.img?`<img src="${esc(it.img)}" alt="">`:ICON[cat.type](it.color)}<small>${esc(it.name)}</small>${it.price?`<b>৳${esc(it.price)}</b>`:''}</div>`).join('')+'</div>';
+  t.innerHTML=mk(its.slice(0,h))+'<div class="gap"></div>'+mk(its.slice(h));
+  const cards=t.querySelectorAll('.card');
+  cards.forEach((el,i)=>el.onclick=()=>{cards.forEach(x=>x.classList.remove('sel'));el.classList.add('sel');pick(cat.type,its[i])});
+  t.style.transform='translateX(80px)';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{t.classList.remove('out');t.style.transform=''}));
  },350);
 }
-$('stage').addEventListener('pointermove',e=>{
- const x=(e.clientX/innerWidth-.5),y=(e.clientY/innerHeight-.5);
- $('big').style.transform=`translate(${x*-30}px,${y*-20}px)`;
- $('model').style.transform=`translateX(calc(-50% + ${x*14}px))`;
- track.style.perspectiveOrigin=`${50+x*20}% 50%`;
-});
-show('Outerwear');
+
+/* ---------- ADMIN ---------- */
+function msg(t){const m=$('msg');m.textContent=t;m.style.display='block';setTimeout(()=>m.style.display='none',7000)}
+function inp(cls,val,cb,type,ph){const i=document.createElement('input');i.className=cls;i.type=type||'text';i.value=val||'';i.placeholder=ph||'';i.oninput=()=>cb(i.value);return i}
+function btn(t,cls,cb){const b=document.createElement('button');b.textContent=t;b.className='ab '+(cls||'');b.onclick=cb;return b}
+function initAdmin(){
+ document.body.classList.add('adm');
+ const h=location.hostname;
+ $('o').value=localStorage.getItem('adm_o')||(h.endsWith('github.io')?h.split('.')[0]:'');
+ $('r').value=localStorage.getItem('adm_r')||(h.endsWith('github.io')?location.pathname.split('/')[1]:'');
+ $('t').value=localStorage.getItem('adm_t')||'';
+ render();
+}
+function render(){
+ const a=$('app');a.innerHTML='';
+ const top=document.createElement('div');top.className='box';
+ top.innerHTML='<h2>সাইটের তথ্য</h2><label>ব্র্যান্ড নাম (পেছনের বড় লেখা)</label>';
+ top.append(inp('',CFG.brand,v=>CFG.brand=v));
+ top.insertAdjacentHTML('beforeend','<label>WhatsApp নম্বর (অর্ডার বাটনের জন্য, যেমন 8801XXXXXXXXX)</label>');
+ top.append(inp('',CFG.whatsapp,v=>CFG.whatsapp=v,'text','8801...'));a.append(top);
+ CFG.categories.forEach(c=>{
+  const b=document.createElement('div');b.className='box';
+  const h=document.createElement('h2');h.textContent=c.name+' — '+c.items.length+' টি আইটেম (প্রথম ৬টি সাইটে দেখায়)';b.append(h);
+  c.items.forEach((it,i)=>{const r=document.createElement('div');r.className='row';
+   r.append(inp('n',it.name,v=>it.name=v,'text','নাম'),inp('',it.color,v=>it.color=v,'color'),inp('p',it.price,v=>it.price=v,'text','দাম'),
+    inp('s',it.sizes,v=>it.sizes=v,'text','সাইজ: S,M,L'),inp('i',it.img,v=>it.img=v,'text','ছবির লিংক (ঐচ্ছিক)'),
+    btn('✕','r',()=>{c.items.splice(i,1);render()}));b.append(r)});
+  b.append(btn('+ নতুন আইটেম','',()=>{c.items.push(D('New item','#888888','',c.type==='shoes'?'39,40,41,42,43':'S,M,L,XL'));render()}));
+  a.append(b)});
+}
+function dl(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(CFG,null,2)],{type:'application/json'}));a.download='products.json';a.click()}
+async function save(){
+ const o=$('o').value.trim(),r=$('r').value.trim(),t=$('t').value.trim();
+ if(!o||!r||!t)return msg('Username, Repository আর Token তিনটাই দিন');
+ try{localStorage.setItem('adm_o',o);localStorage.setItem('adm_r',r);localStorage.setItem('adm_t',t)}catch(e){}
+ const url=`https://api.github.com/repos/${o}/${r}/contents/products.json`,hd={Authorization:'Bearer '+t,Accept:'application/vnd.github+json'};
+ try{
+  let sha;const x=await fetch(url,{headers:hd});if(x.ok)sha=(await x.json()).sha;
+  const p=await fetch(url,{method:'PUT',headers:hd,body:JSON.stringify({message:'Update products',content:btoa(unescape(encodeURIComponent(JSON.stringify(CFG,null,2)))),sha})});
+  msg(p.ok?'সেভ হয়েছে ✓ ১-২ মিনিটে সাইটে দেখা যাবে':'সেভ হয়নি (কোড '+p.status+') — Token বা Repository নাম ঠিক আছে কিনা দেখুন');
+ }catch(e){msg('নেটওয়ার্ক সমস্যা, আবার চেষ্টা করুন')}
+}
 </script>
-</body>
-</html>
+</body></html>
