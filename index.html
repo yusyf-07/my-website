@@ -15,8 +15,8 @@
     body {
       background: #d8dce3;
       color: #1a1d24;
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh;
+      overflow-x: hidden;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -71,11 +71,11 @@
     .nav-pill {
       display: flex;
       gap: 6px;
-      background: rgba(255, 255, 255, 0.55);
+      background: rgba(255, 255, 255, 0.65);
       backdrop-filter: blur(14px);
       padding: 6px;
       border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.75);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
     }
 
@@ -100,16 +100,29 @@
     .stage {
       position: relative;
       flex: 1;
+      min-height: 520px;
       display: flex;
       align-items: center;
       justify-content: center;
       transform-style: preserve-3d;
       z-index: 2;
+      padding: 20px;
+    }
+
+    .tab-panel {
+      display: none;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .tab-panel.active {
+      display: flex;
     }
 
     /* Floating Sneaker Cards */
     .cards-row {
-      position: absolute;
+      position: relative;
       width: 92%;
       max-width: 1280px;
       display: flex;
@@ -128,7 +141,7 @@
     .shoe-card {
       width: 165px;
       height: 215px;
-      background: rgba(255, 255, 255, 0.42);
+      background: rgba(255, 255, 255, 0.45);
       backdrop-filter: blur(14px);
       border: 1px solid rgba(255, 255, 255, 0.75);
       border-radius: 20px;
@@ -155,7 +168,7 @@
 
     .shoe-card.active {
       border: 2px solid #5b2be0;
-      background: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.78);
       transform: translateY(-8px) scale(1.05);
     }
 
@@ -197,11 +210,100 @@
       border-radius: 50%;
     }
 
-    /* Stylized Vector Human Figure with Swappable Outfit & Shoes */
     .mannequin-svg {
       width: 220px;
       height: 440px;
       filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.12));
+    }
+
+    /* Studio & Lookbook Panels */
+    .glass-box {
+      width: 100%;
+      max-width: 820px;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 20px 45px rgba(20, 25, 38, 0.1);
+    }
+
+    .glass-box h2 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .glass-box p {
+      font-size: 13px;
+      color: #4a5160;
+      margin-bottom: 20px;
+    }
+
+    .studio-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .studio-card {
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+    }
+
+    .studio-card h3 {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .action-btn {
+      border: none;
+      background: #1a1d24;
+      color: #fff;
+      padding: 9px 14px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .action-btn:hover {
+      opacity: 0.9;
+    }
+
+    .action-btn.secondary {
+      background: rgba(26, 29, 36, 0.1);
+      color: #1a1d24;
+    }
+
+    .lookbook-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+    }
+
+    .look-item {
+      background: rgba(255, 255, 255, 0.72);
+      border-radius: 18px;
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .look-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(91, 43, 224, 0.12);
+      color: #5b2be0;
+      margin-bottom: 6px;
     }
 
     /* Bottom Floating Dock */
@@ -216,7 +318,9 @@
       display: flex;
       align-items: center;
       gap: 16px;
-      background: rgba(255, 255, 255, 0.65);
+      flex-wrap: wrap;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.68);
       backdrop-filter: blur(16px);
       padding: 10px 20px;
       border-radius: 999px;
@@ -261,9 +365,107 @@
       color: #1a1d24;
     }
 
+    /* Cart Drawer */
+    .cart-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 20, 30, 0.35);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: flex-end;
+      z-index: 50;
+    }
+
+    .cart-backdrop.open {
+      display: flex;
+    }
+
+    .cart-drawer {
+      width: 100%;
+      max-width: 380px;
+      height: 100%;
+      background: rgba(248, 250, 252, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: -12px 0 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .close-btn {
+      border: none;
+      background: rgba(0, 0, 0, 0.07);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cart-item {
+      background: #fff;
+      border-radius: 14px;
+      padding: 12px 14px;
+      border: 1px solid rgba(0, 0, 0, 0.07);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qty-btn {
+      width: 24px;
+      height: 24px;
+      border: none;
+      border-radius: 8px;
+      background: #e2e8f0;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .cart-footer {
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      padding-top: 16px;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
     @media (max-width: 900px) {
       .shoe-card.far { display: none; }
       .shoe-card { width: 125px; height: 175px; padding: 10px; }
+      .cards-row { position: static; flex-direction: column; gap: 16px; }
+      .stage { flex-direction: column; }
     }
   </style>
 </head>
@@ -276,108 +478,165 @@
   <!-- Top Navigation -->
   <header>
     <div class="nav-pill">
-      <button class="nav-btn">Studio</button>
-      <button class="nav-btn">Lookbook</button>
-      <button class="nav-btn active">Try-On 3D</button>
-      <button class="nav-btn">Cart (1)</button>
+      <button class="nav-btn" id="tab-studio" onclick="switchTab('studio')">Studio</button>
+      <button class="nav-btn" id="tab-lookbook" onclick="switchTab('lookbook')">Lookbook</button>
+      <button class="nav-btn active" id="tab-tryon" onclick="switchTab('tryon')">Try-On 3D</button>
+      <button class="nav-btn" id="cartBtn" onclick="toggleCart(true)">Cart (1)</button>
     </div>
   </header>
 
   <!-- Main Spatial Stage -->
   <main class="stage">
-    <div class="cards-row">
-      <!-- Left Cards -->
-      <div class="card-group">
-        <div class="shoe-card far" data-name="Aero Slate V1" data-price="$165" data-color="#64748b" data-sole="#f8fafc" onclick="selectShoe(this)">
-          <svg width="110" height="75" viewBox="0 0 120 80">
-            <path d="M15 55 Q20 35 45 35 L68 22 L82 40 Q105 42 110 56 L108 64 L12 64 Z" fill="#64748b"/>
-            <path d="M12 60 L108 60 L106 67 L14 67 Z" fill="#f8fafc"/>
-          </svg>
-          <div class="shoe-info">
-            <div class="shoe-name">Aero Slate V1</div>
-            <div class="shoe-price">$165</div>
+    <!-- Try-On 3D View -->
+    <section class="tab-panel active" id="panel-tryon">
+      <div class="cards-row">
+        <!-- Left Cards -->
+        <div class="card-group">
+          <div class="shoe-card far" data-name="Aero Slate V1" data-price="165" data-color="#64748b" data-sole="#f8fafc" onclick="selectShoe(this)">
+            <svg width="110" height="75" viewBox="0 0 120 80">
+              <path d="M15 55 Q20 35 45 35 L68 22 L82 40 Q105 42 110 56 L108 64 L12 64 Z" fill="#64748b"/>
+              <path d="M12 60 L108 60 L106 67 L14 67 Z" fill="#f8fafc"/>
+            </svg>
+            <div class="shoe-info">
+              <div class="shoe-name">Aero Slate V1</div>
+              <div class="shoe-price">$165</div>
+            </div>
+          </div>
+
+          <div class="shoe-card active" data-name="Crimson Court 4" data-price="210" data-color="#dc2626" data-sole="#ffffff" onclick="selectShoe(this)">
+            <svg width="115" height="80" viewBox="0 0 120 80">
+              <path d="M15 55 Q20 32 45 32 L68 18 L84 38 Q105 40 110 56 L108 64 L12 64 Z" fill="#f1f5f9" stroke="#1e293b" stroke-width="2"/>
+              <path d="M42 35 L72 24 L82 42 L48 48 Z" fill="#dc2626"/>
+              <path d="M12 60 L108 60 L106 67 L14 67 Z" fill="#1e293b"/>
+            </svg>
+            <div class="shoe-info">
+              <div class="shoe-name">Crimson Court 4</div>
+              <div class="shoe-price">$210</div>
+            </div>
           </div>
         </div>
 
-        <div class="shoe-card active" data-name="Crimson Court 4" data-price="$210" data-color="#dc2626" data-sole="#ffffff" onclick="selectShoe(this)">
-          <svg width="115" height="80" viewBox="0 0 120 80">
-            <path d="M15 55 Q20 32 45 32 L68 18 L84 38 Q105 40 110 56 L108 64 L12 64 Z" fill="#f1f5f9" stroke="#1e293b" stroke-width="2"/>
-            <path d="M42 35 L72 24 L82 42 L48 48 Z" fill="#dc2626"/>
-            <path d="M12 60 L108 60 L106 67 L14 67 Z" fill="#1e293b"/>
-          </svg>
-          <div class="shoe-info">
-            <div class="shoe-name">Crimson Court 4</div>
-            <div class="shoe-price">$210</div>
+        <!-- Right Cards -->
+        <div class="card-group">
+          <div class="shoe-card" data-name="Neon Pulse Low" data-price="190" data-color="#10b981" data-sole="#e2e8f0" onclick="selectShoe(this)">
+            <svg width="115" height="80" viewBox="0 0 120 80">
+              <path d="M15 55 Q22 36 48 36 L70 25 L85 40 Q105 42 110 56 L108 64 L12 64 Z" fill="#cbd5e1"/>
+              <path d="M25 56 L95 56 L92 63 L25 63 Z" fill="#10b981"/>
+              <path d="M12 62 L108 62 L106 68 L14 68 Z" fill="#ffffff"/>
+            </svg>
+            <div class="shoe-info">
+              <div class="shoe-name">Neon Pulse Low</div>
+              <div class="shoe-price">$190</div>
+            </div>
+          </div>
+
+          <div class="shoe-card far" data-name="Solaris Runner" data-price="180" data-color="#f59e0b" data-sole="#1e293b" onclick="selectShoe(this)">
+            <svg width="110" height="75" viewBox="0 0 120 80">
+              <path d="M15 55 Q20 35 45 35 L68 22 L82 40 Q105 42 110 56 L108 64 L12 64 Z" fill="#f8fafc"/>
+              <path d="M50 32 L78 28 L86 46 L54 46 Z" fill="#f59e0b"/>
+              <path d="M12 60 L108 60 L106 67 L14 67 Z" fill="#1e293b"/>
+            </svg>
+            <div class="shoe-info">
+              <div class="shoe-name">Solaris Runner</div>
+              <div class="shoe-price">$180</div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Right Cards -->
-      <div class="card-group">
-        <div class="shoe-card" data-name="Neon Pulse Low" data-price="$190" data-color="#10b981" data-sole="#e2e8f0" onclick="selectShoe(this)">
-          <svg width="115" height="80" viewBox="0 0 120 80">
-            <path d="M15 55 Q22 36 48 36 L70 25 L85 40 Q105 42 110 56 L108 64 L12 64 Z" fill="#cbd5e1"/>
-            <path d="M25 56 L95 56 L92 63 L25 63 Z" fill="#10b981"/>
-            <path d="M12 62 L108 62 L106 68 L14 68 Z" fill="#ffffff"/>
-          </svg>
-          <div class="shoe-info">
-            <div class="shoe-name">Neon Pulse Low</div>
-            <div class="shoe-price">$190</div>
-          </div>
-        </div>
+      <!-- Center Model -->
+      <div class="model-container" id="modelContainer">
+        <div class="model-shadow"></div>
+        <svg class="mannequin-svg" viewBox="0 0 220 440">
+          <circle cx="110" cy="46" r="22" fill="#f1c29b" />
+          <path d="M88 44 Q88 20 110 20 Q132 20 132 44 Q128 32 110 32 Q92 32 88 44 Z" fill="#1e222b" />
+          <rect x="103" y="66" width="14" height="14" rx="4" fill="#e5b188" />
+          <g id="jacketGroup" fill="#6326d9">
+            <rect x="74" y="78" width="72" height="118" rx="22" />
+            <rect x="48" y="84" width="26" height="108" rx="13" transform="rotate(6 60 84)" />
+            <rect x="146" y="84" width="26" height="108" rx="13" transform="rotate(-6 160 84)" />
+            <line x1="76" y1="106" x2="144" y2="106" stroke="rgba(0,0,0,0.22)" stroke-width="2" />
+            <line x1="75" y1="134" x2="145" y2="134" stroke="rgba(0,0,0,0.22)" stroke-width="2" />
+            <line x1="76" y1="162" x2="144" y2="162" stroke="rgba(0,0,0,0.22)" stroke-width="2" />
+            <line x1="110" y1="78" x2="110" y2="196" stroke="rgba(0,0,0,0.28)" stroke-width="2" />
+          </g>
+          <circle cx="52" cy="198" r="9" fill="#f1c29b" />
+          <circle cx="168" cy="198" r="9" fill="#f1c29b" />
+          <path d="M80 194 L108 194 L105 395 L83 395 Z" fill="#181b22" />
+          <path d="M112 194 L140 194 L137 395 L115 395 Z" fill="#181b22" />
+          <g id="modelShoes">
+            <rect x="76" y="394" width="32" height="16" rx="7" fill="#dc2626" class="shoe-upper" />
+            <rect x="74" y="407" width="35" height="6" rx="3" fill="#ffffff" class="shoe-sole" />
+            <rect x="112" y="394" width="32" height="16" rx="7" fill="#dc2626" class="shoe-upper" />
+            <rect x="111" y="407" width="35" height="6" rx="3" fill="#ffffff" class="shoe-sole" />
+          </g>
+        </svg>
+      </div>
+    </section>
 
-        <div class="shoe-card far" data-name="Solaris Runner" data-price="$180" data-color="#f59e0b" data-sole="#1e293b" onclick="selectShoe(this)">
-          <svg width="110" height="75" viewBox="0 0 120 80">
-            <path d="M15 55 Q20 35 45 35 L68 22 L82 40 Q105 42 110 56 L108 64 L12 64 Z" fill="#f8fafc"/>
-            <path d="M50 32 L78 28 L86 46 L54 46 Z" fill="#f59e0b"/>
-            <path d="M12 60 L108 60 L106 67 L14 67 Z" fill="#1e293b"/>
-          </svg>
-          <div class="shoe-info">
-            <div class="shoe-name">Solaris Runner</div>
-            <div class="shoe-price">$180</div>
+    <!-- Studio View -->
+    <section class="tab-panel" id="panel-studio">
+      <div class="glass-box">
+        <h2>FIT Spatial Studio</h2>
+        <p>Customize your outfit setup and add the active sneaker straight to your cart.</p>
+        <div class="studio-controls">
+          <div class="studio-card">
+            <h3>Active Footwear</h3>
+            <p id="studioShoeText" style="margin-bottom:12px;">Crimson Court 4 — $210</p>
+            <button class="action-btn" onclick="addSelectedToCart()">Add to Cart</button>
+          </div>
+          <div class="studio-card">
+            <h3>Jacket Color</h3>
+            <div class="color-dots" style="margin-top:8px;">
+              <button class="dot" style="background:#6326d9;" onclick="changeJacket('#6326d9', 'Electric Violet')"></button>
+              <button class="dot" style="background:#1e293b;" onclick="changeJacket('#1e293b', 'Obsidian Black')"></button>
+              <button class="dot" style="background:#0284c7;" onclick="changeJacket('#0284c7', 'Cobalt Blue')"></button>
+              <button class="dot" style="background:#059669;" onclick="changeJacket('#059669', 'Emerald')"></button>
+            </div>
+          </div>
+          <div class="studio-card">
+            <h3>3D Stage Preview</h3>
+            <button class="action-btn secondary" onclick="switchTab('tryon')">Back to 3D Model</button>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Center Model -->
-    <div class="model-container" id="modelContainer">
-      <div class="model-shadow"></div>
-      <svg class="mannequin-svg" viewBox="0 0 220 440">
-        <!-- Head & Hair -->
-        <circle cx="110" cy="46" r="22" fill="#f1c29b" />
-        <path d="M88 44 Q88 20 110 20 Q132 20 132 44 Q128 32 110 32 Q92 32 88 44 Z" fill="#1e222b" />
-        <!-- Neck -->
-        <rect x="103" y="66" width="14" height="14" rx="4" fill="#e5b188" />
-        <!-- Puffer Jacket (Color Dynamic) -->
-        <g id="jacketGroup" fill="#6326d9">
-          <rect x="74" y="78" width="72" height="118" rx="22" />
-          <!-- Left & Right Sleeves -->
-          <rect x="48" y="84" width="26" height="108" rx="13" transform="rotate(6 60 84)" />
-          <rect x="146" y="84" width="26" height="108" rx="13" transform="rotate(-6 160 84)" />
-          <!-- Puffer Ribs -->
-          <line x1="76" y1="106" x2="144" y2="106" stroke="rgba(0,0,0,0.22)" stroke-width="2" />
-          <line x1="75" y1="134" x2="145" y2="134" stroke="rgba(0,0,0,0.22)" stroke-width="2" />
-          <line x1="76" y1="162" x2="144" y2="162" stroke="rgba(0,0,0,0.22)" stroke-width="2" />
-          <line x1="110" y1="78" x2="110" y2="196" stroke="rgba(0,0,0,0.28)" stroke-width="2" />
-        </g>
-        <!-- Hands -->
-        <circle cx="52" cy="198" r="9" fill="#f1c29b" />
-        <circle cx="168" cy="198" r="9" fill="#f1c29b" />
-        <!-- Trousers -->
-        <path d="M80 194 L108 194 L105 395 L83 395 Z" fill="#181b22" />
-        <path d="M112 194 L140 194 L137 395 L115 395 Z" fill="#181b22" />
-        <!-- Left & Right Sneakers (Dynamic) -->
-        <g id="modelShoes">
-          <!-- Left Shoe -->
-          <rect x="76" y="394" width="32" height="16" rx="7" fill="#dc2626" class="shoe-upper" />
-          <rect x="74" y="407" width="35" height="6" rx="3" fill="#ffffff" class="shoe-sole" />
-          <!-- Right Shoe -->
-          <rect x="112" y="394" width="32" height="16" rx="7" fill="#dc2626" class="shoe-upper" />
-          <rect x="111" y="407" width="35" height="6" rx="3" fill="#ffffff" class="shoe-sole" />
-        </g>
-      </svg>
-    </div>
+    <!-- Lookbook View -->
+    <section class="tab-panel" id="panel-lookbook">
+      <div class="glass-box">
+        <h2>Curated Lookbook</h2>
+        <p>Pick a complete look to apply on the 3D model or add directly to your cart.</p>
+        <div class="lookbook-grid">
+          <div class="look-item">
+            <div>
+              <span class="look-badge">STREET EDIT</span>
+              <h3>Violet + Crimson Court 4</h3>
+              <p style="margin:6px 0 0;">Electric Violet puffer with Crimson Court 4 ($210).</p>
+            </div>
+            <button class="action-btn" onclick="applyLook('Crimson Court 4', 210, '#dc2626', '#ffffff', '#6326d9', 'Electric Violet')">Equip Look</button>
+          </div>
+
+          <div class="look-item">
+            <div>
+              <span class="look-badge">URBAN PULSE</span>
+              <h3>Cobalt + Neon Pulse Low</h3>
+              <p style="margin:6px 0 0;">Cobalt Blue puffer with Neon Pulse Low ($190).</p>
+            </div>
+            <button class="action-btn" onclick="applyLook('Neon Pulse Low', 190, '#10b981', '#e2e8f0', '#0284c7', 'Cobalt Blue')">Equip Look</button>
+          </div>
+
+          <div class="look-item">
+            <div>
+              <span class="look-badge">SOLAR RUN</span>
+              <h3>Obsidian + Solaris Runner</h3>
+              <p style="margin:6px 0 0;">Obsidian Black puffer with Solaris Runner ($180).</p>
+            </div>
+            <button class="action-btn" onclick="applyLook('Solaris Runner', 180, '#f59e0b', '#1e293b', '#1e293b', 'Obsidian Black')">Equip Look</button>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- Bottom Floating Dock -->
@@ -385,18 +644,40 @@
     <div class="control-dock">
       <span class="dock-label">Jacket Color</span>
       <div class="color-dots">
-        <button class="dot" style="background:#6326d9;" onclick="changeJacket('#6326d9')" title="Electric Violet"></button>
-        <button class="dot" style="background:#1e293b;" onclick="changeJacket('#1e293b')" title="Obsidian Black"></button>
-        <button class="dot" style="background:#0284c7;" onclick="changeJacket('#0284c7')" title="Cobalt Blue"></button>
-        <button class="dot" style="background:#059669;" onclick="changeJacket('#059669')" title="Emerald"></button>
+        <button class="dot" style="background:#6326d9;" onclick="changeJacket('#6326d9', 'Electric Violet')" title="Electric Violet"></button>
+        <button class="dot" style="background:#1e293b;" onclick="changeJacket('#1e293b', 'Obsidian Black')" title="Obsidian Black"></button>
+        <button class="dot" style="background:#0284c7;" onclick="changeJacket('#0284c7', 'Cobalt Blue')" title="Cobalt Blue"></button>
+        <button class="dot" style="background:#059669;" onclick="changeJacket('#059669', 'Emerald')" title="Emerald"></button>
       </div>
       <div class="divider"></div>
       <span class="selected-readout" id="activeShoeLabel">Crimson Court 4 — $210</span>
+      <button class="action-btn" onclick="addSelectedToCart()">+ Add</button>
     </div>
   </footer>
 
+  <!-- Cart Drawer -->
+  <div class="cart-backdrop" id="cartBackdrop" onclick="handleBackdropClick(event)">
+    <aside class="cart-drawer">
+      <div>
+        <div class="cart-header">
+          <h3>Your Cart</h3>
+          <button class="close-btn" onclick="toggleCart(false)">×</button>
+        </div>
+        <div class="cart-items" id="cartItemsList"></div>
+      </div>
+
+      <div class="cart-footer">
+        <div class="total-row">
+          <span>Total</span>
+          <span id="cartTotal">$210</span>
+        </div>
+        <button class="action-btn" style="width:100%; padding:12px;" onclick="checkoutDemo()">Proceed to Checkout</button>
+      </div>
+    </aside>
+  </div>
+
   <script>
-    // 1. Spatial 3D Mouse Parallax
+    // Spatial 3D Mouse Parallax
     const studioRoom = document.getElementById('studioRoom');
     const bgTitle = document.getElementById('bgTitle');
     const modelContainer = document.getElementById('modelContainer');
@@ -410,26 +691,153 @@
       modelContainer.style.transform = `translate(${x * 12}px, ${y * 6}px)`;
     });
 
-    // 2. Select Footwear Card & Equip on Model
+    // App State
+    let selectedShoe = {
+      name: 'Crimson Court 4',
+      price: 210,
+      color: '#dc2626',
+      sole: '#ffffff'
+    };
+
+    let jacketLabel = 'Electric Violet';
+
+    let cart = [
+      { name: 'Crimson Court 4', price: 210, qty: 1, jacket: 'Electric Violet' }
+    ];
+
+    // Switch Top Tabs (Studio / Lookbook / Try-On 3D)
+    function switchTab(tabName) {
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+
+      const activeBtn = document.getElementById(`tab-${tabName}`);
+      const activePanel = document.getElementById(`panel-${tabName}`);
+
+      if (activeBtn) activeBtn.classList.add('active');
+      if (activePanel) activePanel.classList.add('active');
+    }
+
+    // Select Footwear Card & Equip on Model
     function selectShoe(card) {
       document.querySelectorAll('.shoe-card').forEach(c => c.classList.remove('active'));
       card.classList.add('active');
 
-      const name = card.getAttribute('data-name');
-      const price = card.getAttribute('data-price');
-      const color = card.getAttribute('data-color');
-      const sole = card.getAttribute('data-sole');
+      selectedShoe = {
+        name: card.getAttribute('data-name'),
+        price: Number(card.getAttribute('data-price')),
+        color: card.getAttribute('data-color'),
+        sole: card.getAttribute('data-sole')
+      };
 
-      document.getElementById('activeShoeLabel').textContent = `${name} — ${price}`;
-
-      document.querySelectorAll('.shoe-upper').forEach(el => el.setAttribute('fill', color));
-      document.querySelectorAll('.shoe-sole').forEach(el => el.setAttribute('fill', sole));
+      updateShoeDisplay();
     }
 
-    // 3. Change Jacket Color
-    function changeJacket(color) {
+    function updateShoeDisplay() {
+      const label = `${selectedShoe.name} — $${selectedShoe.price}`;
+      document.getElementById('activeShoeLabel').textContent = label;
+      document.getElementById('studioShoeText').textContent = label;
+
+      document.querySelectorAll('.shoe-upper').forEach(el => el.setAttribute('fill', selectedShoe.color));
+      document.querySelectorAll('.shoe-sole').forEach(el => el.setAttribute('fill', selectedShoe.sole));
+    }
+
+    // Change Jacket Color
+    function changeJacket(color, label = 'Custom') {
       document.getElementById('jacketGroup').setAttribute('fill', color);
+      jacketLabel = label;
     }
+
+    // Apply Look from Lookbook
+    function applyLook(shoeName, price, shoeColor, soleColor, jacketColor, jacketName) {
+      selectedShoe = { name: shoeName, price: price, color: shoeColor, sole: soleColor };
+      updateShoeDisplay();
+      changeJacket(jacketColor, jacketName);
+      switchTab('tryon');
+    }
+
+    // Cart Drawer Controls
+    function toggleCart(open) {
+      const backdrop = document.getElementById('cartBackdrop');
+      if (open) {
+        renderCart();
+        backdrop.classList.add('open');
+      } else {
+        backdrop.classList.remove('open');
+      }
+    }
+
+    function handleBackdropClick(e) {
+      if (e.target.id === 'cartBackdrop') {
+        toggleCart(false);
+      }
+    }
+
+    function addSelectedToCart() {
+      const existing = cart.find(item => item.name === selectedShoe.name && item.jacket === jacketLabel);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({
+          name: selectedShoe.name,
+          price: selectedShoe.price,
+          qty: 1,
+          jacket: jacketLabel
+        });
+      }
+      renderCart();
+      toggleCart(true);
+    }
+
+    function changeQty(index, delta) {
+      cart[index].qty += delta;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+      renderCart();
+    }
+
+    function renderCart() {
+      const list = document.getElementById('cartItemsList');
+      const totalEl = document.getElementById('cartTotal');
+      const cartBtn = document.getElementById('cartBtn');
+
+      const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+      const totalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+      cartBtn.textContent = `Cart (${totalCount})`;
+      totalEl.textContent = `$${totalPrice}`;
+
+      if (cart.length === 0) {
+        list.innerHTML = `<p style="text-align:center; color:#64748b; padding:24px 0;">Your cart is empty.</p>`;
+        return;
+      }
+
+      list.innerHTML = cart.map((item, idx) => `
+        <div class="cart-item">
+          <div>
+            <div style="font-weight:700; font-size:13px;">${item.name}</div>
+            <div style="font-size:11px; color:#64748b;">Jacket: ${item.jacket} • $${item.price} each</div>
+          </div>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="changeQty(${idx}, -1)">-</button>
+            <span style="font-weight:700; font-size:13px;">${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${idx}, 1)">+</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function checkoutDemo() {
+      if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+      const totalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      alert(`Order summary ready! Total: $${totalPrice}`);
+    }
+
+    // Initial render
+    renderCart();
   </script>
 </body>
 </html>
