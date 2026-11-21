@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FIT STORE — E-Commerce & 3D Try-On</title>
+  <title>FIT STORE — E-Commerce & Personal Photo Try-On</title>
   <style>
     * {
       margin: 0;
@@ -40,9 +40,6 @@
       font-weight: 900;
       letter-spacing: -0.03em;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
     }
 
     .brand span {
@@ -152,7 +149,7 @@
       display: block;
     }
 
-    /* Featured Loop / Lookbook Banner Strip (Customizable Pics!) */
+    /* Featured Loop / Lookbook Banner Strip */
     .loop-strip {
       background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
       border-radius: 16px;
@@ -304,12 +301,12 @@
     .btn-light { background: #e2e8f0; color: #0f172a; }
     .btn-danger { background: #ef4444; color: #fff; }
 
-    /* 3D Try-On Studio Layout */
+    /* Personal Photo Try-On Studio Layout */
     .studio-wrapper {
       display: grid;
-      grid-template-columns: 1fr 340px;
+      grid-template-columns: 1fr 350px;
       gap: 20px;
-      min-height: 560px;
+      min-height: 580px;
     }
 
     .stage-3d {
@@ -322,7 +319,8 @@
       justify-content: center;
       overflow: hidden;
       border: 1px solid #cbd5e1;
-      min-height: 500px;
+      min-height: 540px;
+      padding: 20px 20px 70px;
     }
 
     .stage-bg-word {
@@ -333,26 +331,117 @@
       pointer-events: none;
     }
 
-    .model-box {
+    /* Real Photo Fitting Frame */
+    .photo-fitting-frame {
       position: relative;
       z-index: 2;
-      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      width: 310px;
+      max-width: 90%;
+      height: 430px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.22);
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
       display: flex;
-      flex-direction: column;
       align-items: center;
+      justify-content: center;
+    }
+
+    .user-real-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+
+    .no-photo-placeholder {
+      text-align: center;
+      padding: 20px;
+      color: #334155;
+    }
+
+    /* Proper Wearing Layers over User's Photo */
+    .outfit-layer-jacket {
+      position: absolute;
+      left: 50%;
+      top: var(--jacket-top, 26%);
+      width: var(--jacket-w, 72%);
+      height: var(--jacket-h, 36%);
+      transform: translateX(-50%) scale(var(--wear-scale, 1));
+      border-radius: 26px;
+      pointer-events: none;
+      transition: all 0.25s ease;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.55);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .outfit-layer-jacket.active {
+      display: flex;
+    }
+
+    .outfit-layer-shoe {
+      position: absolute;
+      left: 50%;
+      bottom: var(--shoe-bottom, 5%);
+      width: var(--shoe-w, 64%);
+      height: var(--shoe-h, 15%);
+      transform: translateX(-50%) scale(var(--wear-scale, 1));
+      border-radius: 18px;
+      pointer-events: none;
+      transition: all 0.25s ease;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
+    }
+
+    .outfit-layer-shoe.active {
+      display: flex;
+    }
+
+    .wear-badge {
+      position: relative;
+      z-index: 2;
+      background: rgba(15, 23, 42, 0.78);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      backdrop-filter: blur(4px);
+    }
+
+    .wear-overlay-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.52;
     }
 
     .stage-controls {
       position: absolute;
-      bottom: 16px;
+      bottom: 14px;
       display: flex;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.85);
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(10px);
-      padding: 8px 14px;
-      border-radius: 999px;
+      padding: 8px 12px;
+      border-radius: 16px;
       z-index: 5;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
     }
 
     .studio-sidebar {
@@ -362,7 +451,7 @@
       border: 1px solid #e2e8f0;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 16px;
     }
 
     .color-row {
@@ -384,7 +473,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      max-height: 240px;
+      max-height: 200px;
       overflow-y: auto;
     }
 
@@ -510,7 +599,7 @@
 
     <div class="nav-actions">
       <button class="nav-pill-btn active" id="btn-store" onclick="switchView('store')">Store Home</button>
-      <button class="nav-pill-btn" id="btn-studio3d" onclick="switchView('studio3d')">3D Try-On</button>
+      <button class="nav-pill-btn" id="btn-studio3d" onclick="switchView('studio3d')">My Photo Try-On</button>
       <button class="nav-pill-btn" id="btn-admin" onclick="switchView('admin')">+ Manage Site & Pics</button>
       <button class="nav-pill-btn" id="cartHeaderBtn" onclick="toggleCart(true)">Cart (1)</button>
     </div>
@@ -522,102 +611,99 @@
     <div class="cat-chip" onclick="filterByChip('Sneakers', this)">Sneakers</div>
     <div class="cat-chip" onclick="filterByChip('Jackets', this)">Jackets</div>
     <div class="cat-chip" onclick="filterByChip('Streetwear', this)">Streetwear</div>
-    <div class="cat-chip" onclick="switchView('studio3d')">Launch 3D Fitting Room</div>
+    <div class="cat-chip" onclick="switchView('studio3d')">Open My Photo Fitting Room</div>
   </div>
 
   <!-- Main Workspace -->
   <div class="container">
 
-    <!-- 1. STORE VIEW (Amazon/Daraz Layout + Customizable Loop Strip) -->
+    <!-- 1. STORE VIEW -->
     <section class="view-section active" id="view-store">
-      <!-- Featured Lookbook / Loop Gallery -->
       <div class="loop-strip">
         <div class="loop-header">
           <div>
             <h2 style="font-size:18px;">Featured Style Loop & Gallery</h2>
-            <p style="font-size:12px; color:#94a3b8;">Click any banner to equip in 3D, or replace these pics in "+ Manage Site & Pics".</p>
+            <p style="font-size:12px; color:#94a3b8;">Click any banner to try on your photo, or replace loop pics in "+ Manage Site & Pics".</p>
           </div>
           <button class="btn btn-amber" onclick="switchView('admin')">Change Loop Pics</button>
         </div>
         <div class="loop-track" id="loopTrack"></div>
       </div>
 
-      <!-- Product Grid -->
       <h2 style="font-size:18px; margin-bottom:14px;">Trending Products</h2>
       <div class="products-grid" id="productsGrid"></div>
     </section>
 
-    <!-- 2. 3D TRY-ON VIEW -->
+    <!-- 2. PERSONAL PHOTO TRY-ON VIEW (No Cartoon!) -->
     <section class="view-section" id="view-studio3d">
       <div class="studio-wrapper">
         <div class="stage-3d">
-          <div class="stage-bg-word" id="stageBgWord">FIT</div>
+          <div class="stage-bg-word">FIT</div>
 
-          <div class="model-box" id="modelBox">
-            <svg width="230" height="440" viewBox="0 0 220 440">
-              <!-- Head & Hair -->
-              <circle cx="110" cy="46" r="22" fill="#f1c29b" />
-              <path d="M88 44 Q88 20 110 20 Q132 20 132 44 Q128 32 110 32 Q92 32 88 44 Z" fill="#1e222b" />
-              <rect x="103" y="66" width="14" height="14" rx="4" fill="#e5b188" />
-              <!-- Jacket -->
-              <g id="modelJacket" fill="#6326d9">
-                <rect x="74" y="78" width="72" height="118" rx="22" />
-                <rect x="48" y="84" width="26" height="108" rx="13" transform="rotate(6 60 84)" />
-                <rect x="146" y="84" width="26" height="108" rx="13" transform="rotate(-6 160 84)" />
-                <line x1="76" y1="106" x2="144" y2="106" stroke="rgba(0,0,0,0.22)" stroke-width="2" />
-                <line x1="75" y1="134" x2="145" y2="134" stroke="rgba(0,0,0,0.22)" stroke-width="2" />
-                <line x1="76" y1="162" x2="144" y2="162" stroke="rgba(0,0,0,0.22)" stroke-width="2" />
-                <line x1="110" y1="78" x2="110" y2="196" stroke="rgba(0,0,0,0.28)" stroke-width="2" />
-              </g>
-              <!-- Hands -->
-              <circle cx="52" cy="198" r="9" fill="#f1c29b" />
-              <circle cx="168" cy="198" r="9" fill="#f1c29b" />
-              <!-- Trousers -->
-              <path d="M80 194 L108 194 L105 395 L83 395 Z" fill="#181b22" />
-              <path d="M112 194 L140 194 L137 395 L115 395 Z" fill="#181b22" />
-              <!-- Shoes -->
-              <g id="modelShoes">
-                <rect x="76" y="394" width="32" height="16" rx="7" fill="#dc2626" class="shoe-upper" />
-                <rect x="74" y="407" width="35" height="6" rx="3" fill="#ffffff" class="shoe-sole" />
-                <rect x="112" y="394" width="32" height="16" rx="7" fill="#dc2626" class="shoe-upper" />
-                <rect x="111" y="407" width="35" height="6" rx="3" fill="#ffffff" class="shoe-sole" />
-              </g>
-            </svg>
+          <div class="photo-fitting-frame" id="photoFittingFrame">
+            <img id="userPhotoDisplay" class="user-real-photo" alt="Your Photo" style="display:none;" />
+            <div class="no-photo-placeholder" id="noPhotoPlaceholder">
+              <div style="font-weight:800; font-size:15px; margin-bottom:6px;">Upload Your Photo First</div>
+              <p style="font-size:12px; color:#475569; margin-bottom:12px;">Pick your photo from the right panel so selected clothes & shoes fit on you.</p>
+              <label class="btn btn-amber" style="display:inline-block; cursor:pointer;">
+                Choose Your Photo
+                <input type="file" accept="image/*" style="display:none;" onchange="handleUserPhotoUpload(event)" />
+              </label>
+            </div>
+
+            <!-- Proper Wearing Layer: Jacket / Top -->
+            <div class="outfit-layer-jacket active" id="jacketWearLayer">
+              <img id="jacketOverlayImg" class="wear-overlay-img" style="display:none;" alt="" />
+              <span class="wear-badge" id="jacketWearLabel">Jacket: Electric Violet</span>
+            </div>
+
+            <!-- Proper Wearing Layer: Shoes / Footwear -->
+            <div class="outfit-layer-shoe active" id="shoeWearLayer">
+              <img id="shoeOverlayImg" class="wear-overlay-img" style="display:none;" alt="" />
+              <span class="wear-badge" id="shoeWearLabel">Footwear: Crimson Court 4</span>
+            </div>
           </div>
 
-          <!-- 3D View Controls -->
+          <!-- Fine-Tune Fit & View Controls -->
           <div class="stage-controls">
-            <button class="btn btn-light" onclick="rotateModel(-20)">Rotate Left</button>
-            <button class="btn btn-light" onclick="resetModelView()">Front</button>
-            <button class="btn btn-light" onclick="rotateModel(20)">Rotate Right</button>
-            <button class="btn btn-light" onclick="zoomModel(0.1)">Zoom +</button>
-            <button class="btn btn-light" onclick="zoomModel(-0.1)">Zoom -</button>
+            <button class="btn btn-light" onclick="adjustWearOffset(-3)">Fit Up</button>
+            <button class="btn btn-light" onclick="adjustWearOffset(3)">Fit Down</button>
+            <button class="btn btn-light" onclick="adjustWearScale(0.06)">Wear +</button>
+            <button class="btn btn-light" onclick="adjustWearScale(-0.06)">Wear -</button>
+            <button class="btn btn-light" onclick="rotateFrame(-15)">Tilt Left</button>
+            <button class="btn btn-light" onclick="rotateFrame(15)">Tilt Right</button>
+            <button class="btn btn-light" onclick="resetFrameTransform()">Reset</button>
           </div>
         </div>
 
-        <!-- 3D Fitting Room Controls -->
+        <!-- Fitting Controls Sidebar -->
         <div class="studio-sidebar">
           <div>
-            <h3 style="font-size:17px;">3D Fitting Controls</h3>
-            <p id="active3DInfo" style="font-size:13px; color:#475569; margin-top:4px;">Crimson Court 4 — $210</p>
+            <h3 style="font-size:17px;">Your Photo & Fitting</h3>
+            <p id="activeWearSummary" style="font-size:12px; color:#475569; margin-top:4px;">Selected: Crimson Court 4 ($210)</p>
+          </div>
+
+          <div style="background:#f8fafc; padding:12px; border-radius:12px; border:1px solid #e2e8f0;">
+            <label style="font-size:12px; font-weight:700; display:block; margin-bottom:6px;">1. Change Your Photo</label>
+            <input type="file" accept="image/*" onchange="handleUserPhotoUpload(event)" style="font-size:12px; width:100%;" />
           </div>
 
           <div>
-            <label style="font-size:12px; font-weight:700; display:block; margin-bottom:8px;">Jacket Color</label>
+            <label style="font-size:12px; font-weight:700; display:block; margin-bottom:8px;">2. Jacket / Top Color (Proper Fit)</label>
             <div class="color-row" id="studioSwatches"></div>
           </div>
 
           <div>
-            <label style="font-size:12px; font-weight:700; display:block; margin-bottom:8px;">Select Footwear / Item</label>
+            <label style="font-size:12px; font-weight:700; display:block; margin-bottom:8px;">3. Select Product to Wear</label>
             <div class="mini-item-list" id="studioProductList"></div>
           </div>
 
-          <button class="btn btn-amber" style="padding:12px; font-size:14px;" onclick="addActive3DToCart()">Add Equipped Item to Cart</button>
+          <button class="btn btn-amber" style="padding:12px; font-size:14px;" onclick="addActiveWearToCart()">Add Selected Item to Cart</button>
         </div>
       </div>
     </section>
 
-    <!-- 3. ADMIN / SELLER CONTROL PANEL (Upload Your Own Pics & Products) -->
+    <!-- 3. ADMIN / SELLER CONTROL PANEL -->
     <section class="view-section" id="view-admin">
       <div class="admin-columns">
         <!-- Add Product to Store -->
@@ -632,15 +718,15 @@
             <input type="number" id="newProdPrice" placeholder="e.g. 220" />
           </div>
           <div class="form-group">
-            <label>Category</label>
+            <label>Category (Determines Wearing Position)</label>
             <select id="newProdCat">
-              <option value="Sneakers">Sneakers</option>
-              <option value="Jackets">Jackets</option>
-              <option value="Streetwear">Streetwear</option>
+              <option value="Sneakers">Sneakers (Fits on Feet)</option>
+              <option value="Jackets">Jackets (Fits on Upper Body)</option>
+              <option value="Streetwear">Streetwear (Fits on Upper Body)</option>
             </select>
           </div>
           <div class="form-group">
-            <label>3D Model Color</label>
+            <label>Wearing Color / Tint</label>
             <input type="color" id="newProdColor" value="#2563eb" style="height:38px;" />
           </div>
           <div class="form-group">
@@ -650,25 +736,31 @@
           <button class="btn btn-amber" style="width:100%; padding:11px;" onclick="saveNewProduct()">Publish to Store</button>
         </div>
 
-        <!-- Customize Loop / Banner Pictures -->
+        <!-- Customize Loop / Banner Pictures & User Photo -->
         <div class="panel-box">
-          <h3>2. Add / Change Loop Gallery Pictures</h3>
-          <p style="font-size:12px; color:#64748b; margin-bottom:12px;">Upload your own banners/pics for the homepage Featured Style Loop.</p>
+          <h3>2. Your Photo & Loop Gallery Pics</h3>
+          <div class="form-group">
+            <label>Set / Update Your Personal Try-On Photo</label>
+            <input type="file" id="adminUserPhotoInput" accept="image/*" onchange="handleUserPhotoUpload(event)" />
+          </div>
+
+          <hr style="margin:14px 0; border:none; border-top:1px solid #e2e8f0;" />
+
           <div class="form-group">
             <label>Loop Card Title</label>
             <input type="text" id="loopTitleInput" placeholder="e.g. Winter Street Collection" />
           </div>
           <div class="form-group">
             <label>Subtitle / Tag</label>
-            <input type="text" id="loopSubInput" placeholder="e.g. Up to 30% Off • Try in 3D" />
+            <input type="text" id="loopSubInput" placeholder="e.g. Try on Your Photo" />
           </div>
           <div class="form-group">
-            <label>Choose Your Picture</label>
+            <label>Choose Loop Picture</label>
             <input type="file" id="loopFileInput" accept="image/*" />
           </div>
           <button class="btn btn-dark" style="width:100%; padding:11px;" onclick="addLoopSlide()">Add Picture to Loop</button>
 
-          <div style="margin-top:16px; display:flex; flex-direction:column; gap:8px;" id="adminLoopList"></div>
+          <div style="margin-top:14px; display:flex; flex-direction:column; gap:8px;" id="adminLoopList"></div>
         </div>
 
         <!-- Manage Store Products -->
@@ -714,9 +806,9 @@
     ];
 
     const defaultLoopSlides = [
-      { id: 101, title: 'Crimson Court Edition', sub: 'Tap to try on 3D Model', color: '#dc2626', image: '' },
+      { id: 101, title: 'Crimson Court Edition', sub: 'Try on Your Photo', color: '#dc2626', image: '' },
       { id: 102, title: 'Neon Street Drop', sub: 'Fresh 2026 Collection', color: '#10b981', image: '' },
-      { id: 103, title: 'Cobalt Winter Puffer', sub: 'Custom 3D Fit Ready', color: '#0284c7', image: '' }
+      { id: 103, title: 'Cobalt Winter Puffer', sub: 'Personal Photo Fit Ready', color: '#0284c7', image: '' }
     ];
 
     const jacketPalette = [
@@ -729,18 +821,27 @@
 
     let products = JSON.parse(localStorage.getItem('amazon3d_products')) || defaultProducts;
     let loopSlides = JSON.parse(localStorage.getItem('amazon3d_loops')) || defaultLoopSlides;
-    let selectedCategory = 'All';
-    let active3DProduct = products[0];
+    let userPhotoData = localStorage.getItem('fit_user_photo') || '';
+
+    let activeProduct = products[0];
+    let activeJacketColor = '#6326d9';
     let activeJacketName = 'Electric Violet';
+    let activeShoeItem = products[0];
+
     let cart = [{ name: products[0].name, price: products[0].price, qty: 1, variant: 'Electric Violet' }];
 
-    // 3D Model Transform State
-    let modelYaw = 0;
-    let modelScale = 1;
+    // Fitting & Frame Transform State
+    let frameTilt = 0;
+    let wearScale = 1;
+    let jacketTopPercent = 27;
+    let shoeBottomPercent = 5;
 
     function persistData() {
       localStorage.setItem('amazon3d_products', JSON.stringify(products));
       localStorage.setItem('amazon3d_loops', JSON.stringify(loopSlides));
+      if (userPhotoData) {
+        localStorage.setItem('fit_user_photo', userPhotoData);
+      }
     }
 
     function switchView(viewName) {
@@ -753,12 +854,24 @@
     }
 
     function filterByChip(cat, el) {
-      selectedCategory = cat;
       document.getElementById('searchCategory').value = cat;
       document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
       if (el) el.classList.add('active');
       switchView('store');
       renderStore();
+    }
+
+    function handleUserPhotoUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        userPhotoData = e.target.result;
+        persistData();
+        renderFittingRoom();
+        switchView('studio3d');
+      };
+      reader.readAsDataURL(file);
     }
 
     function getFallbackSVG(color) {
@@ -775,7 +888,6 @@
       const query = document.getElementById('searchInput').value.toLowerCase().trim();
       const catFilter = document.getElementById('searchCategory').value;
 
-      // Render Loop Gallery
       document.getElementById('loopTrack').innerHTML = loopSlides.map(slide => `
         <div class="loop-card" onclick="applyLoopSlide(${slide.id})" style="background:${slide.color};">
           ${slide.image ? `<img src="${slide.image}" alt="${slide.title}" />` : ''}
@@ -786,7 +898,6 @@
         </div>
       `).join('');
 
-      // Filter Products
       const filtered = products.filter(p => {
         const matchCat = catFilter === 'All' || p.category === catFilter;
         const matchText = p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query);
@@ -806,78 +917,138 @@
           </div>
           <div class="card-btns">
             <button class="btn btn-amber" onclick="addToCartById(${p.id})">Add to Cart</button>
-            <button class="btn btn-dark" onclick="tryIn3D(${p.id})">Try 3D</button>
+            <button class="btn btn-dark" onclick="tryOnMyPhoto(${p.id})">Try on My Photo</button>
           </div>
         </div>
       `).join('');
     }
 
-    // 3D Studio Functions
-    function render3DStudio() {
+    // Personal Photo Fitting Room Logic
+    function renderFittingRoom() {
+      const imgEl = document.getElementById('userPhotoDisplay');
+      const placeholderEl = document.getElementById('noPhotoPlaceholder');
+
+      if (userPhotoData) {
+        imgEl.src = userPhotoData;
+        imgEl.style.display = 'block';
+        placeholderEl.style.display = 'none';
+      } else {
+        imgEl.style.display = 'none';
+        placeholderEl.style.display = 'block';
+      }
+
       document.getElementById('studioSwatches').innerHTML = jacketPalette.map(c => `
-        <div class="swatch" style="background:${c.hex};" title="${c.name}" onclick="setJacketColor('${c.hex}', '${c.name}')"></div>
+        <div class="swatch" style="background:${c.hex};" title="${c.name}" onclick="setJacketWear('${c.hex}', '${c.name}', '')"></div>
       `).join('');
 
       document.getElementById('studioProductList').innerHTML = products.map(p => `
-        <div class="mini-item ${active3DProduct && active3DProduct.id === p.id ? 'active' : ''}" onclick="equip3DItem(${p.id})">
-          <span>${p.name}</span>
+        <div class="mini-item ${activeProduct && activeProduct.id === p.id ? 'active' : ''}" onclick="selectProductForWearing(${p.id})">
+          <span>${p.name} (${p.category})</span>
           <span>$${p.price}</span>
         </div>
       `).join('');
 
-      if (active3DProduct) {
-        document.getElementById('active3DInfo').textContent = `${active3DProduct.name} — $${active3DProduct.price}`;
-        if (active3DProduct.category === 'Jackets') {
-          document.getElementById('modelJacket').setAttribute('fill', active3DProduct.color);
-        } else {
-          document.querySelectorAll('.shoe-upper').forEach(el => el.setAttribute('fill', active3DProduct.color));
-        }
+      // Apply Jacket / Top Wearing Layer
+      const jacketLayer = document.getElementById('jacketWearLayer');
+      const jacketImg = document.getElementById('jacketOverlayImg');
+      jacketLayer.style.backgroundColor = `${activeJacketColor}66`;
+      jacketLayer.style.setProperty('--jacket-top', `${jacketTopPercent}%`);
+      jacketLayer.style.setProperty('--wear-scale', wearScale);
+      document.getElementById('jacketWearLabel').textContent = `Upper Wear: ${activeJacketName}`;
+
+      if (activeProduct && (activeProduct.category === 'Jackets' || activeProduct.category === 'Streetwear') && activeProduct.image) {
+        jacketImg.src = activeProduct.image;
+        jacketImg.style.display = 'block';
+      } else {
+        jacketImg.style.display = 'none';
+      }
+
+      // Apply Footwear Wearing Layer
+      const shoeLayer = document.getElementById('shoeWearLayer');
+      const shoeImg = document.getElementById('shoeOverlayImg');
+      const shoeColor = activeShoeItem ? activeShoeItem.color : '#dc2626';
+      shoeLayer.style.backgroundColor = `${shoeColor}73`;
+      shoeLayer.style.setProperty('--shoe-bottom', `${shoeBottomPercent}%`);
+      shoeLayer.style.setProperty('--wear-scale', wearScale);
+      document.getElementById('shoeWearLabel').textContent = `Footwear: ${activeShoeItem ? activeShoeItem.name : 'None'}`;
+
+      if (activeShoeItem && activeShoeItem.image) {
+        shoeImg.src = activeShoeItem.image;
+        shoeImg.style.display = 'block';
+      } else {
+        shoeImg.style.display = 'none';
+      }
+
+      if (activeProduct) {
+        document.getElementById('activeWearSummary').textContent =
+          `Selected: ${activeProduct.name} ($${activeProduct.price}) • ${activeProduct.category}`;
       }
     }
 
-    function tryIn3D(id) {
-      equip3DItem(id);
+    function tryOnMyPhoto(id) {
+      selectProductForWearing(id);
       switchView('studio3d');
     }
 
-    function equip3DItem(id) {
+    function selectProductForWearing(id) {
       const item = products.find(p => p.id === id);
       if (!item) return;
-      active3DProduct = item;
-      render3DStudio();
+      activeProduct = item;
+
+      if (item.category === 'Sneakers') {
+        activeShoeItem = item;
+      } else {
+        activeJacketColor = item.color || '#6326d9';
+        activeJacketName = item.name;
+      }
+      renderFittingRoom();
     }
 
     function applyLoopSlide(id) {
       const slide = loopSlides.find(s => s.id === id);
       if (!slide) return;
-      setJacketColor(slide.color, slide.title);
+      setJacketWear(slide.color, slide.title, slide.image);
       switchView('studio3d');
     }
 
-    function setJacketColor(hex, name) {
-      document.getElementById('modelJacket').setAttribute('fill', hex);
+    function setJacketWear(hex, name, overlayImg = '') {
+      activeJacketColor = hex;
       activeJacketName = name;
+      const jacketImg = document.getElementById('jacketOverlayImg');
+      if (overlayImg) {
+        jacketImg.src = overlayImg;
+        jacketImg.style.display = 'block';
+      }
+      renderFittingRoom();
     }
 
-    function rotateModel(deg) {
-      modelYaw += deg;
-      updateModelTransform();
+    function adjustWearOffset(delta) {
+      jacketTopPercent = Math.min(45, Math.max(12, jacketTopPercent + delta));
+      shoeBottomPercent = Math.min(20, Math.max(1, shoeBottomPercent - delta));
+      renderFittingRoom();
     }
 
-    function zoomModel(delta) {
-      modelScale = Math.min(1.4, Math.max(0.75, modelScale + delta));
-      updateModelTransform();
+    function adjustWearScale(delta) {
+      wearScale = Math.min(1.35, Math.max(0.7, Number((wearScale + delta).toFixed(2))));
+      renderFittingRoom();
     }
 
-    function resetModelView() {
-      modelYaw = 0;
-      modelScale = 1;
-      updateModelTransform();
+    function rotateFrame(deg) {
+      frameTilt += deg;
+      updateFrameTransform();
     }
 
-    function updateModelTransform() {
-      const box = document.getElementById('modelBox');
-      box.style.transform = `perspective(700px) rotateY(${modelYaw}deg) scale(${modelScale})`;
+    function resetFrameTransform() {
+      frameTilt = 0;
+      wearScale = 1;
+      jacketTopPercent = 27;
+      shoeBottomPercent = 5;
+      updateFrameTransform();
+      renderFittingRoom();
+    }
+
+    function updateFrameTransform() {
+      document.getElementById('photoFittingFrame').style.transform = `rotate(${frameTilt}deg)`;
     }
 
     // Admin Panel Functions
@@ -947,7 +1118,7 @@
 
     function addLoopSlide() {
       const title = document.getElementById('loopTitleInput').value.trim() || 'Featured Style';
-      const sub = document.getElementById('loopSubInput').value.trim() || 'Click to view in 3D';
+      const sub = document.getElementById('loopSubInput').value.trim() || 'Try on Your Photo';
       const fileInput = document.getElementById('loopFileInput');
 
       const finish = (imgData) => {
@@ -989,11 +1160,13 @@
     }
 
     function resetStoreData() {
-      if (!confirm('Reset all products and loop pictures to default?')) return;
+      if (!confirm('Reset products and loop pictures to default?')) return;
       localStorage.removeItem('amazon3d_products');
       localStorage.removeItem('amazon3d_loops');
       products = [...defaultProducts];
       loopSlides = [...defaultLoopSlides];
+      activeProduct = products[0];
+      activeShoeItem = products[0];
       renderAll();
     }
 
@@ -1018,11 +1191,11 @@
       toggleCart(true);
     }
 
-    function addActive3DToCart() {
-      if (!active3DProduct) return;
-      const found = cart.find(c => c.name === active3DProduct.name && c.variant === activeJacketName);
+    function addActiveWearToCart() {
+      if (!activeProduct) return;
+      const found = cart.find(c => c.name === activeProduct.name && c.variant === activeJacketName);
       if (found) found.qty += 1;
-      else cart.push({ name: active3DProduct.name, price: active3DProduct.price, qty: 1, variant: activeJacketName });
+      else cart.push({ name: activeProduct.name, price: activeProduct.price, qty: 1, variant: activeJacketName });
       renderCart();
       toggleCart(true);
     }
@@ -1068,7 +1241,7 @@
 
     function renderAll() {
       renderStore();
-      render3DStudio();
+      renderFittingRoom();
       renderAdmin();
       renderCart();
     }
